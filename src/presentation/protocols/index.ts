@@ -1,3 +1,3 @@
-export * from './controller';
-export * from './emailValidator';
-export * from './http';
+export * from './IController';
+export * from './IEmailValidator';
+export * from './IHttp';

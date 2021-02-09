@@ -1,12 +1,12 @@
 import { ServerError } from '../errors/serverError';
-import { HttpResponse } from '../protocols/http';
+import { IHttpResponse } from '../protocols/IHttp';
 
-export const badRequest = (error: Error): HttpResponse => ({
+export const badRequest = (error: Error): IHttpResponse => ({
   statusCode: 400,
   body: error,
 });
 
-export const serverError = (): HttpResponse => ({
+export const serverError = (): IHttpResponse => ({
   statusCode: 500,
   body: new ServerError(),
 });

@@ -1,20 +1,20 @@
 import { InvalidParamError, MissingParamError } from '../errors';
 import { badRequest, serverError } from '../helpers';
 import {
-  Controller,
-  EmailValidator,
-  HttpRequest,
-  HttpResponse,
+  IController,
+  IEmailValidator,
+  IHttpRequest,
+  IHttpResponse,
 } from '../protocols';
 
-export class SignUpController implements Controller {
-  private readonly emailValidator: EmailValidator;
+export class SignUpController implements IController {
+  private readonly emailValidator: IEmailValidator;
 
-  constructor(emailValitador: EmailValidator) {
+  constructor(emailValitador: IEmailValidator) {
     this.emailValidator = emailValitador;
   }
 
-  handle(httpRequest: HttpRequest): HttpResponse {
+  handle(httpRequest: IHttpRequest): IHttpResponse {
     try {
       const requiredFields = [
         'name',
