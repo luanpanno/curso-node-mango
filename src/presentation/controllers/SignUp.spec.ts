@@ -1,3 +1,8 @@
+import { IAccountModel } from '../../domain/models/IAccount';
+import {
+  IAddAccount,
+  IAddAccountModel,
+} from '../../domain/usecases/IAddAccount';
 import { MissingParamError, InvalidParamError, ServerError } from '../errors';
 import { IEmailValidator } from '../protocols';
 import { SignUpController } from './SignUp';
@@ -5,6 +10,7 @@ import { SignUpController } from './SignUp';
 interface SutTypes {
   sut: SignUpController;
   emailValidatorStub: IEmailValidator;
+  addAccountStub: IAddAccount;
 }
 
 const makeEmailValidator = (): IEmailValidator => {
@@ -18,30 +24,32 @@ const makeEmailValidator = (): IEmailValidator => {
   return new EmailValidatorStub();
 };
 
-// const makeAddAccount = (): AddAccount => {
-//   class AddAccountStub implements AddAccount {
-//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//     add(account: AddAccountModel): AccountModel {
-//       const fakeAccount = {
-//         id: 'id',
-//         name: 'name',
-//         email: 'any_email@email.com',
-//         password: 'password',
-//       };
-//       return true;
-//     }
-//   }
+const makeAddAccount = (): IAddAccount => {
+  class AddAccountStub implements IAddAccount {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    add(account: IAddAccountModel): IAccountModel {
+      const fakeAccount = {
+        id: 'id',
+        name: 'name',
+        email: 'any_email@email.com',
+        password: 'password',
+      };
+      return fakeAccount;
+    }
+  }
 
-//   return new AddAccountStub();
-// };
+  return new AddAccountStub();
+};
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
-  const sut = new SignUpController(emailValidatorStub);
+  const addAccountStub = makeAddAccount();
+  const sut = new SignUpController(emailValidatorStub, addAccountStub);
 
   return {
     sut,
     emailValidatorStub,
+    addAccountStub,
   };
 };
 
@@ -189,9 +197,8 @@ describe('SignUp Controller', () => {
   });
 
   test('should call AddAccount with correct values', () => {
-    const { sut } = makeSut();
-    // const { sut, addAccountStub } = makeSut();
-    // const addSpy = jest.spyOn(addAccountStub, 'add');
+    const { sut, addAccountStub } = makeSut();
+    const addSpy = jest.spyOn(addAccountStub, 'add');
     const httpRequest = {
       body: {
         name: 'name',
@@ -203,10 +210,10 @@ describe('SignUp Controller', () => {
 
     sut.handle(httpRequest);
 
-    // expect(addSpy).toHaveBeenCalledWith({
-    //   name: 'name',
-    //   email: 'any_email@email.com',
-    //   password: 'password',
-    // });
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'name',
+      email: 'any_email@email.com',
+      password: 'password',
+    });
   });
 });
