@@ -6,15 +6,19 @@ interface SutTypes {
   encrypterStub: IEncrypter;
 }
 
-const makeSut = (): SutTypes => {
-  class EncrypterStub {
+const makeEncrypter = (): IEncrypter => {
+  class EncrypterStub implements IEncrypter {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async encrypt(value: string): Promise<string> {
       return Promise.resolve('hashed_password');
     }
   }
 
-  const encrypterStub = new EncrypterStub();
+  return new EncrypterStub();
+};
+
+const makeSut = (): SutTypes => {
+  const encrypterStub = makeEncrypter();
   const sut = new DbAddAccount(encrypterStub);
 
   return {
