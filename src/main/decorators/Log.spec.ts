@@ -49,7 +49,7 @@ class ControllerStub implements IController {
 const makeLogErrorRepository = (): ILogErrorRepository => {
   class LogErrorRepositoryStub implements ILogErrorRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async log(stackError: string): Promise<void> {
+    async logError(stackError: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -97,7 +97,7 @@ describe('LogControllerDecorator', () => {
 
   test('should call LogErrorRepository with correct error if controller returns a server error', async () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut();
-    const logSpy = jest.spyOn(logErrorRepositoryStub, 'log');
+    const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError');
 
     jest
       .spyOn(controllerStub, 'handle')
