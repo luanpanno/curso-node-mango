@@ -1,4 +1,5 @@
 import { Collection, MongoClient } from 'mongodb';
+import { IAccountModel } from '../../../../domain/models/IAccount';
 
 export const MongoHelper = {
   client: null as MongoClient,
@@ -16,5 +17,11 @@ export const MongoHelper = {
 
   getCollection(name: string): Collection {
     return this.client.db().collection(name);
+  },
+
+  map(colletion: any): any {
+    const { _id, ...collectionWithoutId } = colletion;
+
+    return { ...collectionWithoutId, id: _id };
   },
 };
