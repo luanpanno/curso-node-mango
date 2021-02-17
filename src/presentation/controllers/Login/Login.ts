@@ -1,5 +1,5 @@
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest } from '../../helpers';
+import { badRequest, serverError } from '../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../protocols';
 import { IEmailValidator } from '../SignUp/SignUp.protocols';
 
@@ -11,19 +11,23 @@ class LoginController implements IController {
   }
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
-    const requiredFields = ['email', 'password'];
+    try {
+      const requiredFields = ['email', 'password'];
 
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field));
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field));
+        }
       }
-    }
 
-    const { email } = httpRequest.body;
-    const isEmailValid = this.emailValidator.isValid(email);
+      const { email } = httpRequest.body;
+      const isEmailValid = this.emailValidator.isValid(email);
 
-    if (!isEmailValid) {
-      return Promise.resolve(badRequest(new InvalidParamError('email')));
+      if (!isEmailValid) {
+        return Promise.resolve(badRequest(new InvalidParamError('email')));
+      }
+    } catch (error) {
+      return serverError(error);
     }
   }
 }
