@@ -30,7 +30,7 @@ class LoginController implements IController {
       const isEmailValid = this.emailValidator.isValid(email);
 
       if (!isEmailValid) {
-        return Promise.resolve(badRequest(new InvalidParamError('email')));
+        return badRequest(new InvalidParamError('email'));
       }
 
       await this.authentication.auth(email, password);
