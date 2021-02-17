@@ -1,9 +1,15 @@
-import { IAuthentication } from '../../../domain/usecases/IAuthentication';
 import { EmailValidatorAdapter } from '../../../utils/EmailValidatorAdapter';
-import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, serverError, unauthorized } from '../../helpers';
-import { IEmailValidator, IHttpRequest } from '../SignUp/SignUp.protocols';
 import LoginController from './Login';
+import {
+  IEmailValidator,
+  IAuthentication,
+  IHttpRequest,
+  badRequest,
+  MissingParamError,
+  InvalidParamError,
+  unauthorized,
+  serverError,
+} from './Login.protocols';
 
 interface SutTypes {
   sut: LoginController;
