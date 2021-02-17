@@ -1,3 +1,4 @@
+import { ok } from '../../helpers';
 import {
   IController,
   IEmailValidator,
@@ -40,14 +41,11 @@ class LoginController implements IController {
         return badRequest(new InvalidParamError('email'));
       }
 
-      const token = await this.authentication.auth(email, password);
+      const accessToken = await this.authentication.auth(email, password);
 
-      if (!token) return unauthorized();
+      if (!accessToken) return unauthorized();
 
-      return {
-        statusCode: 200,
-        body: { token },
-      };
+      return ok({ accessToken });
     } catch (error) {
       return serverError(error);
     }
