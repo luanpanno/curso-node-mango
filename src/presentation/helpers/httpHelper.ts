@@ -1,9 +1,15 @@
+import { UnauthorizedError } from '../errors';
 import { ServerError } from '../errors/serverError';
 import { IHttpResponse } from '../protocols/IHttp';
 
 export const badRequest = (error: Error): IHttpResponse => ({
   statusCode: 400,
   body: error,
+});
+
+export const unauthorized = (): IHttpResponse => ({
+  statusCode: 401,
+  body: new UnauthorizedError(),
 });
 
 export const serverError = (error: Error): IHttpResponse => ({
