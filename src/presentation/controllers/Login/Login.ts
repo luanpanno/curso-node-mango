@@ -1,13 +1,19 @@
+import { IAuthentication } from '../../../domain/usecases/IAuthentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, serverError } from '../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../protocols';
 import { IEmailValidator } from '../SignUp/SignUp.protocols';
 
 class LoginController implements IController {
-  emailValidator: IEmailValidator;
+  private readonly emailValidator: IEmailValidator;
+  private readonly authentication: IAuthentication;
 
-  constructor(emailValidator: IEmailValidator) {
+  constructor(
+    emailValidator: IEmailValidator,
+    authentication: IAuthentication
+  ) {
     this.emailValidator = emailValidator;
+    this.authentication = authentication;
   }
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
@@ -20,12 +26,14 @@ class LoginController implements IController {
         }
       }
 
-      const { email } = httpRequest.body;
+      const { email, password } = httpRequest.body;
       const isEmailValid = this.emailValidator.isValid(email);
 
       if (!isEmailValid) {
         return Promise.resolve(badRequest(new InvalidParamError('email')));
       }
+
+      await this.authentication.auth(email, password);
     } catch (error) {
       return serverError(error);
     }
