@@ -1,7 +1,7 @@
 import { MissingParamError } from '../../errors';
 import { IValidation } from '../../protocols/IValidation';
 
-class RequiredFieldValidation implements IValidation {
+export class RequiredFieldValidation implements IValidation {
   private readonly fieldName: string;
 
   constructor(fieldName: string) {
@@ -14,5 +14,3 @@ class RequiredFieldValidation implements IValidation {
     }
   }
 }
-
-export default RequiredFieldValidation;

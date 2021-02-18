@@ -1,6 +1,6 @@
 import { IValidation } from '../../protocols/IValidation';
 
-class ValidationComposite implements IValidation {
+export class ValidationComposite implements IValidation {
   private readonly validations: IValidation[];
 
   constructor(validations: IValidation[]) {
@@ -17,5 +17,3 @@ class ValidationComposite implements IValidation {
     }
   }
 }
-
-export default ValidationComposite;

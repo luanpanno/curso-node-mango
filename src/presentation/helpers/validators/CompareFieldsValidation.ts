@@ -1,7 +1,7 @@
 import { InvalidParamError } from '../../errors';
 import { IValidation } from '../../protocols/IValidation';
 
-class CompareFieldsValidation implements IValidation {
+export class CompareFieldsValidation implements IValidation {
   private readonly fieldName: string;
   private readonly fieldToCompare: string;
 
@@ -16,5 +16,3 @@ class CompareFieldsValidation implements IValidation {
     }
   }
 }
-
-export default CompareFieldsValidation;

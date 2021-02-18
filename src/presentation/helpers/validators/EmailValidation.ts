@@ -2,7 +2,7 @@ import { InvalidParamError } from '../../errors';
 import { IEmailValidator } from '../../protocols/IEmailValidator';
 import { IValidation } from '../../protocols/IValidation';
 
-class EmailValidation implements IValidation {
+export class EmailValidation implements IValidation {
   private readonly fieldName: string;
   private readonly emailValidator: IEmailValidator;
 
@@ -19,5 +19,3 @@ class EmailValidation implements IValidation {
     }
   }
 }
-
-export default EmailValidation;
