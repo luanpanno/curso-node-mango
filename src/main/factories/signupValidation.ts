@@ -1,8 +1,9 @@
 import CompareFieldsValidation from '../../presentation/helpers/validators/CompareFieldsValidation';
+import EmailValidation from '../../presentation/helpers/validators/EmailValidation';
 import { IValidation } from '../../presentation/helpers/validators/IValidation';
 import RequiredFieldValidation from '../../presentation/helpers/validators/RequiredFieldValidation';
 import ValidationComposite from '../../presentation/helpers/validators/ValidationComposite';
-import { IController } from '../../presentation/protocols';
+import { EmailValidatorAdapter } from '../../utils/EmailValidatorAdapter';
 
 export const makeSignupValidation = (): ValidationComposite => {
   const validations: IValidation[] = [];
@@ -14,6 +15,7 @@ export const makeSignupValidation = (): ValidationComposite => {
   validations.push(
     new CompareFieldsValidation('password', 'passwordConfirmation')
   );
+  validations.push(new EmailValidation('email', new EmailValidatorAdapter()));
 
   return new ValidationComposite(validations);
 };
