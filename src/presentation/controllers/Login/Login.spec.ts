@@ -1,3 +1,4 @@
+import { IAuthenticationModel } from '../../../domain/usecases/IAuthentication';
 import { ok } from '../../helpers';
 import LoginController from './Login';
 import {
@@ -26,7 +27,7 @@ const makeFakeRequest = (): IHttpRequest => ({
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(email: string, password: string): Promise<string> {
+    async auth(auth: IAuthenticationModel): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
@@ -64,7 +65,10 @@ describe('Login Controller', () => {
 
     await sut.handle(makeFakeRequest());
 
-    expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password');
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password',
+    });
   });
 
   test('should return 401 if invalid credentials are provided', async () => {
