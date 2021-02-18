@@ -1,44 +1,31 @@
 import { ok } from '../../helpers';
+import { IValidation } from '../SignUp/SignUp.protocols';
 import {
   IController,
-  IEmailValidator,
   IAuthentication,
   IHttpRequest,
   IHttpResponse,
   badRequest,
-  MissingParamError,
-  InvalidParamError,
   unauthorized,
   serverError,
 } from './Login.protocols';
 
 class LoginController implements IController {
-  private readonly emailValidator: IEmailValidator;
   private readonly authentication: IAuthentication;
+  private readonly validation: IValidation;
 
-  constructor(
-    emailValidator: IEmailValidator,
-    authentication: IAuthentication
-  ) {
-    this.emailValidator = emailValidator;
+  constructor(authentication: IAuthentication, validation: IValidation) {
     this.authentication = authentication;
+    this.validation = validation;
   }
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const requiredFields = ['email', 'password'];
-
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field));
-        }
-      }
-
       const { email, password } = httpRequest.body;
-      const isEmailValid = this.emailValidator.isValid(email);
+      const error = this.validation.validate(httpRequest.body);
 
-      if (!isEmailValid) {
-        return badRequest(new InvalidParamError('email'));
+      if (error) {
+        return badRequest(error);
       }
 
       const accessToken = await this.authentication.auth(email, password);
