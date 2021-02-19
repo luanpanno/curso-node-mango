@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { IAccountModel } from '../../../domain/models/IAccount';
 import { IAuthenticationModel } from '../../../domain/usecases/IAuthentication';
-import { ILoadAccountByEmailRepository } from '../../protocols/ILoadAccountByEmailRepository';
+import { ILoadAccountByEmailRepository } from '../../protocols/db/ILoadAccountByEmailRepository';
 import { DbAuthentication } from './DbAuthentication';
 
 interface SutTypes {
