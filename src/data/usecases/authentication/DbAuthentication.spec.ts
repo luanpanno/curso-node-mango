@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/indent */
-import { IAccountModel } from '../../../domain/models/IAccount';
-import { IAuthenticationModel } from '../../../domain/usecases/IAuthentication';
-import { IHashComparer } from '../../protocols/criptography/IHashComparer';
-import { ITokenGenerator } from '../../protocols/criptography/ITokenGenerator';
-import { ILoadAccountByEmailRepository } from '../../protocols/db/ILoadAccountByEmailRepository';
-import { IUpdateAccessTokenRepository } from '../../protocols/db/IUpdateAccessTokenRepository';
 import { DbAuthentication } from './DbAuthentication';
+import {
+  IAccountModel,
+  IAuthenticationModel,
+  IHashComparer,
+  ITokenGenerator,
+  ILoadAccountByEmailRepository,
+  IUpdateAccessTokenRepository,
+} from './DbAuthentication.protocols';
 
 interface SutTypes {
   sut: DbAuthentication;
