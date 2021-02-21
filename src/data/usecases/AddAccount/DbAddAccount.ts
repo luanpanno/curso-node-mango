@@ -7,13 +7,10 @@ import {
 } from './DbAddAccountProtocols';
 
 class DbAddAccount implements IAddAccount {
-  private readonly hasher: IHasher;
-  private readonly addAccountRepository: IAddAccountRepository;
-
-  constructor(hasher: IHasher, addAccountRepository: IAddAccountRepository) {
-    this.hasher = hasher;
-    this.addAccountRepository = addAccountRepository;
-  }
+  constructor(
+    private readonly hasher: IHasher,
+    private readonly addAccountRepository: IAddAccountRepository
+  ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async add(accountData: IAddAccountModel): Promise<IAccountModel> {
