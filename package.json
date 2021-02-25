@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/main/server.js",
-    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "up": "npm run build && docker-compose up",
+    "up": "npm run build && docker-compose up -d",
+    "down": "docker-compose down",
+    "dev": "tsc -w",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests ./src/index.js",
