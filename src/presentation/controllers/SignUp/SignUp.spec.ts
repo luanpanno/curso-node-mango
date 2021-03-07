@@ -4,6 +4,8 @@ import {
   IAccountModel,
   IAddAccountModel,
   IValidation,
+  IAuthentication,
+  IAuthenticationModel,
 } from './SignUp.protocols';
 import { SignUpController } from './SignUp';
 import { IHttpRequest } from '../../protocols';
@@ -11,6 +13,7 @@ import { badRequest, ok, serverError } from '../../helpers';
 
 interface SutTypes {
   sut: SignUpController;
+  authenticationStub: IAuthentication;
   addAccountStub: IAddAccount;
   validationStub: IValidation;
 }
@@ -30,6 +33,17 @@ const makeFakeRequest = (): IHttpRequest => ({
     passwordConfirmation: 'any_password',
   },
 });
+
+const makeAuthentication = (): IAuthentication => {
+  class AuthenticationStub implements IAuthentication {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async auth(auth: IAuthenticationModel): Promise<string> {
+      return Promise.resolve('any_token');
+    }
+  }
+
+  return new AuthenticationStub();
+};
 
 const makeAddAccount = (): IAddAccount => {
   class AddAccountStub implements IAddAccount {
@@ -58,12 +72,18 @@ const makeValidation = (): IValidation => {
 const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccount();
   const validationStub = makeValidation();
-  const sut = new SignUpController(addAccountStub, validationStub);
+  const authenticationStub = makeAuthentication();
+  const sut = new SignUpController(
+    addAccountStub,
+    validationStub,
+    authenticationStub
+  );
 
   return {
     sut,
     validationStub,
     addAccountStub,
+    authenticationStub,
   };
 };
 
@@ -131,5 +151,17 @@ describe('SignUp Controller', () => {
     expect(httpResponse).toEqual(
       badRequest(new MissingParamError('any_field'))
     );
+  });
+
+  test('should call authentication with correct values', async () => {
+    const { sut, authenticationStub } = makeSut();
+    const authSpy = jest.spyOn(authenticationStub, 'auth');
+
+    await sut.handle(makeFakeRequest());
+
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password',
+    });
   });
 });
