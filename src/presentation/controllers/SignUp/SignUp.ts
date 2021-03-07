@@ -1,5 +1,5 @@
-import { badRequest, ok, serverError } from '../../helpers';
-import { IValidation } from '../Login/Login.protocols';
+import { badRequest, forbidden, ok, serverError } from '../../helpers';
+import { EmailInUseError, IValidation } from '../Login/Login.protocols';
 import {
   IAddAccount,
   IHttpRequest,
@@ -24,11 +24,15 @@ export class SignUpController implements IController {
         return badRequest(error);
       }
 
-      await this.addAccount.add({
+      const account = await this.addAccount.add({
         name,
         email,
         password,
       });
+
+      if (!account) {
+        return forbidden(new EmailInUseError());
+      }
 
       const accessToken = await this.authentication.auth({ email, password });
 
