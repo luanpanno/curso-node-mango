@@ -1,3 +1,4 @@
+import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
 import {
   IAccountModel,
   IAddAccount,
@@ -9,19 +10,25 @@ import {
 class DbAddAccount implements IAddAccount {
   constructor(
     private readonly hasher: IHasher,
-    private readonly addAccountRepository: IAddAccountRepository
+    private readonly addAccountRepository: IAddAccountRepository,
+    private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository
   ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async add(accountData: IAddAccountModel): Promise<IAccountModel> {
-    const hashedPassword = await this.hasher.hash(accountData.password);
+    const account = await this.loadAccountByEmailRepository.loadByEmail(
+      accountData.email
+    );
 
-    const account = await this.addAccountRepository.add({
-      ...accountData,
-      password: hashedPassword,
-    });
+    if (!account) {
+      const hashedPassword = await this.hasher.hash(accountData.password);
+      const newAccount = await this.addAccountRepository.add(
+        Object.assign({}, accountData, { password: hashedPassword })
+      );
+      return newAccount;
+    }
 
-    return account;
+    return null;
   }
 }
 

@@ -5,6 +5,7 @@ import {
   IAddAccountRepository,
 } from './DbAddAccountProtocols';
 import DbAddAccount from './DbAddAccount';
+import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
 
 interface SutTypes {
   sut: DbAddAccount;
@@ -49,10 +50,25 @@ const makeAddAccountRepository = (): IAddAccountRepository => {
   return new AddAccountRepositoryStub();
 };
 
+const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
+  class LoadAccountByEmailRepositoryStub
+    implements ILoadAccountByEmailRepository {
+    async loadByEmail(email: string): Promise<IAccountModel> {
+      return new Promise((resolve) => resolve(null));
+    }
+  }
+  return new LoadAccountByEmailRepositoryStub();
+};
+
 const makeSut = (): SutTypes => {
+  const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hasherStub = makeHasher();
   const addAccountRepositoryStub = makeAddAccountRepository();
-  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub);
+  const sut = new DbAddAccount(
+    hasherStub,
+    addAccountRepositoryStub,
+    loadAccountByEmailRepositoryStub
+  );
 
   return {
     sut,

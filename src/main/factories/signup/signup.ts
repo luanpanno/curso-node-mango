@@ -5,17 +5,17 @@ import LogMongoRepository from '../../../infra/db/mongodb/LogRepository/LogMongo
 import { SignUpController } from '../../../presentation/controllers/SignUp/SignUp';
 import { IController } from '../../../presentation/protocols';
 import LogControllerDecorator from '../../decorators/Log';
+import { makeDbAddAccount } from '../usecases/AddAccount/DbAddAccountFactory';
+import { makeDbAuthentication } from '../usecases/Authentication/DbAuthenticationFactory';
 import { makeSignupValidation } from './signupValidation';
 
 export const makeSignupController = (): IController => {
-  const salt = 12;
-  const hasher = new BcryptAdapter(salt);
-  const addAccountRepository = new AccountMongoRepository();
-  const addAccount = new DbAddAccount(hasher, addAccountRepository);
+  const addAccount = makeDbAddAccount();
   const validationComposite = makeSignupValidation();
   const signupController = new SignUpController(
     addAccount,
-    validationComposite
+    validationComposite,
+    makeDbAuthentication()
   );
   const logMongoRepository = new LogMongoRepository();
 
