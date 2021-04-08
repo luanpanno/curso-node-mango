@@ -116,4 +116,11 @@ dist
 .pnp.*
 
 globalConfig.json
+node_modules
+dist
+coverage
 data
+!src/data
+!tests/data
+.vscode
+globalConfig.json
