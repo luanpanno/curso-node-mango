@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import {
   IHasher,
   IAccountModel,
@@ -11,6 +12,7 @@ interface SutTypes {
   sut: DbAddAccount;
   hasherStub: IHasher;
   addAccountRepositoryStub: IAddAccountRepository;
+  loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
 }
 
 const makeFakeAccount = (): IAccountModel => ({
@@ -21,9 +23,9 @@ const makeFakeAccount = (): IAccountModel => ({
 });
 
 const makeFakeAccountData = (): IAddAccountModel => ({
-  name: 'name',
-  email: 'email@email.com',
-  password: 'password',
+  name: 'valid_name',
+  email: 'valid_email@mail.com',
+  password: 'valid_password',
 });
 
 const makeHasher = (): IHasher => {
@@ -53,8 +55,9 @@ const makeAddAccountRepository = (): IAddAccountRepository => {
 const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub
     implements ILoadAccountByEmailRepository {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async loadByEmail(email: string): Promise<IAccountModel> {
-      return new Promise((resolve) => resolve(null));
+      return Promise.resolve(null);
     }
   }
   return new LoadAccountByEmailRepositoryStub();
@@ -74,6 +77,7 @@ const makeSut = (): SutTypes => {
     sut,
     hasherStub,
     addAccountRepositoryStub,
+    loadAccountByEmailRepositoryStub,
   };
 };
 
@@ -84,7 +88,7 @@ describe('DbAddAccount UseCase', () => {
 
     await sut.add(makeFakeAccountData());
 
-    expect(hashSpy).toHaveBeenCalledWith('password');
+    expect(hashSpy).toHaveBeenCalledWith('valid_password');
   });
 
   test('should throw if Hasher throws', async () => {
@@ -106,8 +110,8 @@ describe('DbAddAccount UseCase', () => {
     await sut.add(makeFakeAccountData());
 
     expect(addSpy).toHaveBeenCalledWith({
-      name: 'name',
-      email: 'email@email.com',
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
       password: 'hashed_password',
     });
   });
@@ -129,5 +133,26 @@ describe('DbAddAccount UseCase', () => {
     const account = await sut.add(makeFakeAccountData());
 
     expect(account).toEqual(makeFakeAccount());
+  });
+
+  test('should return null LoadAccountByEmailRepository not returns null', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+
+    jest
+      .spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail')
+      .mockReturnValueOnce(Promise.resolve(makeFakeAccount()));
+
+    const account = await sut.add(makeFakeAccountData());
+
+    expect(account).toBeNull();
+  });
+
+  test('should call LoadAccountByEmailRepository with correct email', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+    const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail');
+
+    await sut.add(makeFakeAccountData());
+
+    expect(loadSpy).toHaveBeenCalledWith('valid_email@mail.com');
   });
 });

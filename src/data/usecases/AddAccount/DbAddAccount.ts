@@ -14,7 +14,6 @@ class DbAddAccount implements IAddAccount {
     private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async add(accountData: IAddAccountModel): Promise<IAccountModel> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(
       accountData.email
