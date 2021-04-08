@@ -1,0 +1,14 @@
+import LoginController from '../../../../presentation/controllers/Login/Login';
+import { IController } from '../../../../presentation/protocols';
+import { makeLogControllerDecorator } from '../../decorators/LogControllerDecoratorFactory';
+import { makeDbAuthentication } from '../../usecases/Authentication/DbAuthenticationFactory';
+import { makeLoginValidation } from './loginValidation';
+
+export const makeLoginController = (): IController => {
+  const controller = new LoginController(
+    makeDbAuthentication(),
+    makeLoginValidation()
+  );
+
+  return makeLogControllerDecorator(controller);
+};

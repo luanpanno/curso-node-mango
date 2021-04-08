@@ -3,12 +3,12 @@ import {
   EmailValidation,
   RequiredFieldValidation,
   ValidationComposite,
-} from '../../../presentation/helpers/validators';
-import { IValidation } from '../../../presentation/protocols/IValidation';
-import { IEmailValidator } from '../../../presentation/protocols/IEmailValidator';
+} from '../../../../presentation/helpers/validators';
+import { IValidation } from '../../../../presentation/protocols/IValidation';
+import { IEmailValidator } from '../../../../presentation/protocols/IEmailValidator';
 import { makeSignupValidation } from './signupValidation';
 
-jest.mock('../../../presentation/helpers/validators/ValidationComposite');
+jest.mock('../../../../presentation/helpers/validators/ValidationComposite');
 
 const makeEmailValidator = (): IEmailValidator => {
   class EmailValidatorStub implements IEmailValidator {
