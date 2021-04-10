@@ -3,6 +3,11 @@ import { IHttpRequest } from '../../../protocols';
 import { IValidation } from '../../../protocols/IValidation';
 import { AddSurveyController } from './AddSurveyController';
 
+interface SutTypes {
+  sut: AddSurveyController;
+  validationStub: IValidation;
+}
+
 const makeFakeRequest = (): IHttpRequest => ({
   body: {
     question: 'any_question',
@@ -15,17 +20,30 @@ const makeFakeRequest = (): IHttpRequest => ({
   },
 });
 
+const makeValidation = (): IValidation => {
+  class ValidationStub implements IValidation {
+    validate(input: any): Error {
+      return null;
+    }
+  }
+
+  return new ValidationStub();
+};
+
+const makeSut = (): SutTypes => {
+  const validationStub = makeValidation();
+  const sut = new AddSurveyController(validationStub);
+
+  return {
+    sut,
+    validationStub,
+  };
+};
+
 describe('AddSurvey Controller', () => {
   test('should call validation with correct values', async () => {
-    class ValidationStub implements IValidation {
-      validate(input: any): Error {
-        return null;
-      }
-    }
-
-    const validationStub = new ValidationStub();
+    const { sut, validationStub } = makeSut();
     const validateSpy = jest.spyOn(validationStub, 'validate');
-    const sut = new AddSurveyController(validationStub);
     const httpRequest = makeFakeRequest();
 
     await sut.handle(httpRequest);
