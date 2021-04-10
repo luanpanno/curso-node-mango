@@ -1,13 +1,19 @@
+import { LoadAccountByToken } from '../../domain/usecases/LoadAccountByToken';
 import { AccessDeniedError } from '../errors';
 import { forbidden } from '../helpers';
 import { IHttpRequest, IHttpResponse } from '../protocols';
 import { Middleware } from '../protocols/Middleware';
 
 export class AuthMiddleware implements Middleware {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
-    const error = forbidden(new AccessDeniedError());
+  constructor(private readonly loadAccountByToken: LoadAccountByToken) {}
 
-    return error;
+  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+    const accessToken = httpRequest.headers?.['x-access-token'];
+
+    if (accessToken) {
+      await this.loadAccountByToken.load(accessToken);
+    }
+
+    return forbidden(new AccessDeniedError());
   }
 }
