@@ -1,9 +1,13 @@
+import { AddSurvey } from '../../../../domain/usecases/AddSurvey';
 import { badRequest } from '../../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
 import { IValidation } from '../../../protocols/IValidation';
 
 export class AddSurveyController implements IController {
-  constructor(private readonly validation: IValidation) {}
+  constructor(
+    private readonly validation: IValidation,
+    private readonly addSurvey: AddSurvey
+  ) {}
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
     const error = this.validation.validate(httpRequest.body);
@@ -12,6 +16,13 @@ export class AddSurveyController implements IController {
       return badRequest(error);
     }
 
-    return Promise.resolve(null);
+    const { question, answers } = httpRequest.body;
+
+    await this.addSurvey.add({
+      question,
+      answers,
+    });
+
+    return null;
   }
 }
