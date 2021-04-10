@@ -2,6 +2,11 @@ import { AddSurveyModel } from '../../../domain/usecases/AddSurvey';
 import { AddSurveyRepository } from '../../protocols/db/survey/AddSurveyRepository';
 import { DbAddSurvey } from './DbAddSurvey';
 
+interface SutTypes {
+  sut: DbAddSurvey;
+  addSurveyRepositoryStub: AddSurveyRepository;
+}
+
 const makeFakeSurveyData = (): AddSurveyModel => ({
   question: 'any_question',
   answers: [
@@ -12,18 +17,31 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
   ],
 });
 
+const makeAddSurveyRepository = (): AddSurveyRepository => {
+  class AddSurveyRepositoryStub implements AddSurveyRepository {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async add(surveyData: AddSurveyModel): Promise<void> {
+      return Promise.resolve(null);
+    }
+  }
+
+  return new AddSurveyRepositoryStub();
+};
+
+const makeSut = (): SutTypes => {
+  const addSurveyRepositoryStub = makeAddSurveyRepository();
+  const sut = new DbAddSurvey(addSurveyRepositoryStub);
+
+  return {
+    sut,
+    addSurveyRepositoryStub,
+  };
+};
+
 describe('DbAddSurvey usecase', () => {
   test('should call AddSurveyRepository with correct values', async () => {
-    class AddSurveyRepositoryStub implements AddSurveyRepository {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      async add(surveyData: AddSurveyModel): Promise<void> {
-        return Promise.resolve(null);
-      }
-    }
-
-    const addSurveyRepositoryStub = new AddSurveyRepositoryStub();
+    const { sut, addSurveyRepositoryStub } = makeSut();
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add');
-    const sut = new DbAddSurvey(addSurveyRepositoryStub);
     const surveyData = makeFakeSurveyData();
 
     await sut.add(surveyData);
