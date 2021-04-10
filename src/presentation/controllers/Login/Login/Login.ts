@@ -1,14 +1,7 @@
-import { ok } from '../../helpers';
-import { IValidation } from '../SignUp/SignUp.protocols';
-import {
-  IController,
-  IAuthentication,
-  IHttpRequest,
-  IHttpResponse,
-  badRequest,
-  unauthorized,
-  serverError,
-} from './Login.protocols';
+import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
+import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
+import { IValidation } from '../../../protocols/IValidation';
+import { IAuthentication } from './Login.protocols';
 
 class LoginController implements IController {
   constructor(

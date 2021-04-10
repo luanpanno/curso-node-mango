@@ -1,5 +1,6 @@
-import { badRequest, forbidden, ok, serverError } from '../../helpers';
-import { EmailInUseError, IValidation } from '../Login/Login.protocols';
+import { EmailInUseError } from '../../../errors';
+import { badRequest, forbidden, ok, serverError } from '../../../helpers';
+import { IValidation } from '../Login/Login.protocols';
 import {
   IAddAccount,
   IHttpRequest,

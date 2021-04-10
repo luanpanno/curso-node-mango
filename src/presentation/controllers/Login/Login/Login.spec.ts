@@ -1,15 +1,12 @@
-import { IAuthenticationModel } from '../../../domain/usecases/IAuthentication';
-import { ok } from '../../helpers';
-import LoginController from './Login';
 import {
   IAuthentication,
-  IHttpRequest,
-  badRequest,
-  MissingParamError,
-  unauthorized,
-  serverError,
-  IValidation,
-} from './Login.protocols';
+  IAuthenticationModel,
+} from '../../../../domain/usecases/IAuthentication';
+import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
+import LoginController from './Login';
+import { IValidation } from '../../../../presentation/protocols/IValidation';
+import { IHttpRequest } from '../../../protocols/IHttp';
+import { MissingParamError } from '../../../errors';
 
 interface SutTypes {
   sut: LoginController;
