@@ -2,7 +2,11 @@
 import { IHttpRequest } from '../../../protocols';
 import { IValidation } from '../../../protocols/IValidation';
 import { AddSurveyController } from './AddSurveyController';
-import { badRequest, serverError } from '../../../helpers/http/httpHelper';
+import {
+  badRequest,
+  serverError,
+  noContent,
+} from '../../../helpers/http/httpHelper';
 import {
   AddSurvey,
   AddSurveyModel,
@@ -99,5 +103,12 @@ describe('AddSurvey Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  test('should return 204 on success', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(noContent());
   });
 });
