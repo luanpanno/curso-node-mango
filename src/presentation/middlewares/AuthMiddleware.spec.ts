@@ -1,9 +1,11 @@
 import { AccessDeniedError } from '../errors';
 import { forbidden, ok, serverError } from '../helpers/http/httpHelper';
 import { AuthMiddleware } from './AuthMiddleware';
-import { LoadAccountByToken } from '../../domain/usecases/LoadAccountByToken';
-import { IAccountModel } from '../../domain/models/IAccount';
-import { IHttpRequest } from '../protocols';
+import {
+  LoadAccountByToken,
+  IHttpRequest,
+  IAccountModel,
+} from './AuthMiddleware.protocols';
 
 interface SutTypes {
   sut: AuthMiddleware;
