@@ -1,10 +1,31 @@
 import { DbLoadAccountByToken } from './DbLoadAccountByToken';
 import { Decrypter } from '../../protocols/criptography/Decrypter';
+import { LoadAccountByTokenRepository } from '../../protocols/db/account/LoadAccountByTokenRepository';
+import { IAccountModel } from '../authentication/DbAuthentication.protocols';
 
 interface SutTypes {
   sut: DbLoadAccountByToken;
   decrypterStub: Decrypter;
+  loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 }
+
+const makeFakeAccount = (): IAccountModel => ({
+  id: 'valid_id',
+  name: 'valid_name',
+  email: 'valid_email@mail.com',
+  password: 'valid_password',
+});
+
+const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
+  class LoadAccountByTokenRepository implements LoadAccountByTokenRepository {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async loadByToken(token: string, role?: string): Promise<IAccountModel> {
+      return Promise.resolve(makeFakeAccount());
+    }
+  }
+
+  return new LoadAccountByTokenRepository();
+};
 
 const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
@@ -19,11 +40,16 @@ const makeDecrypter = (): Decrypter => {
 
 const makeSut = (): SutTypes => {
   const decrypterStub = makeDecrypter();
-  const sut = new DbLoadAccountByToken(decrypterStub);
+  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepository();
+  const sut = new DbLoadAccountByToken(
+    decrypterStub,
+    loadAccountByTokenRepositoryStub
+  );
 
   return {
     sut,
     decrypterStub,
+    loadAccountByTokenRepositoryStub,
   };
 };
 
@@ -47,5 +73,17 @@ describe('DbLoadAccountByToken usecase', () => {
     const account = await sut.load('any_token', 'any_role');
 
     expect(account).toBeNull();
+  });
+
+  test('should call LoadAccountByTokenRepository with correct values', async () => {
+    const { sut, loadAccountByTokenRepositoryStub } = makeSut();
+    const loadByTokenSpy = jest.spyOn(
+      loadAccountByTokenRepositoryStub,
+      'loadByToken'
+    );
+
+    await sut.load('any_token', 'any_role');
+
+    expect(loadByTokenSpy).toHaveBeenCalledWith('any_token', 'any_role');
   });
 });
