@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
+import { LoadAccountByTokenRepository } from '../../../../data/protocols/db/account/LoadAccountByTokenRepository';
 import { IAddAccountRepository } from '../../../../data/protocols/db/IAddAccountRepository';
 import { ILoadAccountByEmailRepository } from '../../../../data/protocols/db/ILoadAccountByEmailRepository';
 import { IUpdateAccessTokenRepository } from '../../../../data/protocols/db/IUpdateAccessTokenRepository';
@@ -10,7 +11,8 @@ class AccountMongoRepository
   implements
     IAddAccountRepository,
     ILoadAccountByEmailRepository,
-    IUpdateAccessTokenRepository {
+    IUpdateAccessTokenRepository,
+    LoadAccountByTokenRepository {
   async add(accountData: IAddAccountModel): Promise<IAccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
@@ -38,6 +40,16 @@ class AccountMongoRepository
         },
       }
     );
+  }
+
+  async loadByToken(
+    accessToken: string,
+    role?: string
+  ): Promise<IAccountModel> {
+    const accountCollection = await MongoHelper.getCollection('accounts');
+    const account = await accountCollection.findOne({ accessToken, role });
+
+    return account && MongoHelper.map(account);
   }
 }
 
