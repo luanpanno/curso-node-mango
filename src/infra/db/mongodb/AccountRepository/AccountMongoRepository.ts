@@ -47,7 +47,10 @@ class AccountMongoRepository
     role?: string
   ): Promise<IAccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
-    const account = await accountCollection.findOne({ accessToken, role });
+    const account = await accountCollection.findOne({
+      accessToken,
+      $or: [{ role }, { role: 'admin' }],
+    });
 
     return account && MongoHelper.map(account);
   }
