@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/rmanguinho/clean-ts-api.svg?branch=master)](https://travis-ci.org/rmanguinho/clean-ts-api)
-[![Coverage Status](https://coveralls.io/repos/github/rmanguinho/clean-ts-api/badge.svg)](https://coveralls.io/github/rmanguinho/clean-ts-api)
-[![Known Vulnerabilities](https://snyk.io/test/github/rmanguinho/clean-ts-api/badge.svg)](https://snyk.io/test/github/rmanguinho/clean-ts-api)
+[![Build Status](https://www.travis-ci.com/luanpanno/curso-node-mango.svg?token=5qXE3ZkgbPXsh4vZ5czV&branch=main)](https://www.travis-ci.com/luanpanno/curso-node-mango)
+[![Coverage Status](https://coveralls.io/repos/github/luanpanno/curso-node-mango/badge.svg?branch=main&t=0wUswn)](https://coveralls.io/github/luanpanno/curso-node-mango?branch=main)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
