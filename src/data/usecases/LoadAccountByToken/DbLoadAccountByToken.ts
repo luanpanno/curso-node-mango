@@ -5,9 +5,10 @@ import { IAccountModel } from '../authentication/DbAuthentication.protocols';
 export class DbLoadAccountByToken implements LoadAccountByToken {
   constructor(private readonly decrypter: Decrypter) {}
 
-  async load(accessToken: string): Promise<IAccountModel> {
-    this.decrypter.decrypt(accessToken);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async load(accessToken: string, role?: string): Promise<IAccountModel> {
+    await this.decrypter.decrypt(accessToken);
 
-    return Promise.resolve(null);
+    return null;
   }
 }
