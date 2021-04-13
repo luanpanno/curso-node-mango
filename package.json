@@ -14,6 +14,7 @@
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests ./src/index.js",
     "test:ci": "npm test -- --coverage",
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "test:clear": "jest --clearCache"
   },
   "keywords": [],
@@ -30,6 +31,7 @@
     "@types/supertest": "^2.0.10",
     "@types/validator": "^13.1.3",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "coveralls": "^3.1.0",
     "eslint": "^7.19.0",
     "eslint-config-standard-with-typescript": "^20.0.0",
     "eslint-plugin-import": "^2.22.1",

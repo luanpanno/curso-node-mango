@@ -1,4 +1,6 @@
-language: ruby
-rvm:
-  - 2.2
-  - jruby
+language: node_js
+node_js:
+  - 14
+script:
+  - eslint 'src/**'
+  - npm run test:coveralls
