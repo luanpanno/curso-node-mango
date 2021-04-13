@@ -6,7 +6,7 @@ interface SutTypes {
   decrypterStub: Decrypter;
 }
 
-const makeDecrypterStub = (): any => {
+const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async decrypt(value: string): Promise<string> {
@@ -18,7 +18,7 @@ const makeDecrypterStub = (): any => {
 };
 
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypterStub();
+  const decrypterStub = makeDecrypter();
   const sut = new DbLoadAccountByToken(decrypterStub);
 
   return {
