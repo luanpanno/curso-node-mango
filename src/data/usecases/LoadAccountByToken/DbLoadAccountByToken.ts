@@ -9,7 +9,6 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
     private readonly loadAccountByTokenRepository: LoadAccountByTokenRepository
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async load(accessToken: string, role?: string): Promise<IAccountModel> {
     const token = await this.decrypter.decrypt(accessToken);
 
@@ -19,7 +18,9 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
         role
       );
 
-      if (account) return account;
+      if (account) {
+        return account;
+      }
     }
 
     return null;
