@@ -13,8 +13,7 @@ export class SurveyMongoRepository
     await surveyCollection.insertOne(surveyData);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async loadAll(surveyData?: AddSurveyModel): Promise<SurveyModel[]> {
+  async loadAll(): Promise<SurveyModel[]> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
     const surveys: SurveyModel[] = await surveyCollection.find().toArray();
 

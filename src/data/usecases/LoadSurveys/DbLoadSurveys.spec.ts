@@ -1,5 +1,4 @@
 import { SurveyModel } from '../../../domain/models/SurveyModel';
-import { AddSurveyModel } from '../../../domain/usecases/AddSurvey';
 import { LoadSurveysRepository } from '../../protocols/db/survey/LoadSurveysRepository';
 import { DbLoadSurveys } from './DbLoadSurveys';
 
@@ -27,8 +26,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
 
 const makeLoadSurveysRepository = (): LoadSurveysRepository => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadAll(surveyData?: AddSurveyModel): Promise<SurveyModel[]> {
+    async loadAll(): Promise<SurveyModel[]> {
       return Promise.resolve(makeFakeSurveys());
     }
   }
