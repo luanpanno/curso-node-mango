@@ -25,7 +25,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
   ];
 };
 
-const makeLoadSurveysRepository = (): any => {
+const makeLoadSurveysRepository = (): LoadSurveysRepository => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // async loadAll(surveyData: AddSurveyModel): Promise<SurveyModel[]> {
