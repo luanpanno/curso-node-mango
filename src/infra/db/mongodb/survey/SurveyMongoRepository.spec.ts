@@ -7,7 +7,7 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
   question: 'any_question',
   answers: [
     { image: 'any_image', answer: 'any_answer' },
-    { answer: 'other_answer' },
+    { answer: 'any_answer' },
   ],
   date: new Date(),
 });
@@ -44,6 +44,21 @@ describe('Survey Mongo Repository', () => {
       });
 
       expect(survey).toBeTruthy();
+    });
+  });
+
+  describe('loadAll()', () => {
+    test('should loadAll surveys on success', async () => {
+      await surveyCollection.insertMany([
+        makeFakeSurveyData(),
+        makeFakeSurveyData(),
+      ]);
+
+      const sut = makeSut();
+      const surveys = await sut.loadAll();
+
+      expect(surveys?.length).toBe(2);
+      expect(surveys[0]?.question).toBe('any_question');
     });
   });
 });
