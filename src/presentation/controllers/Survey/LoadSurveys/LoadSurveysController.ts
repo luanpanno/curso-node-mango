@@ -1,5 +1,5 @@
 import { LoadSurveys } from '../../../../domain/usecases/LoadSurveys';
-import { ok, serverError } from '../../../helpers';
+import { noContent, ok, serverError } from '../../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
 
 export class LoadSurveysController implements IController {
@@ -9,7 +9,7 @@ export class LoadSurveysController implements IController {
     try {
       const surveys = await this.loadSurveys.load();
 
-      return ok(surveys);
+      return surveys?.length > 0 ? ok(surveys) : noContent();
     } catch (error) {
       return serverError(error);
     }
