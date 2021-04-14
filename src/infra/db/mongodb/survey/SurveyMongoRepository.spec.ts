@@ -33,13 +33,17 @@ describe('Survey Mongo Repository', () => {
     await surveyCollection.deleteMany({});
   });
 
-  test('should add a survey on success', async () => {
-    const sut = makeSut();
+  describe('add()', () => {
+    test('should add a survey on success', async () => {
+      const sut = makeSut();
 
-    await sut.add(makeFakeSurveyData());
+      await sut.add(makeFakeSurveyData());
 
-    const survey = await surveyCollection.findOne({ question: 'any_question' });
+      const survey = await surveyCollection.findOne({
+        question: 'any_question',
+      });
 
-    expect(survey).toBeTruthy();
+      expect(survey).toBeTruthy();
+    });
   });
 });
