@@ -11,6 +11,7 @@ import {
   AddSurvey,
   AddSurveyModel,
 } from '../../../../domain/usecases/AddSurvey';
+import MockDate from 'mockdate';
 
 interface SutTypes {
   sut: AddSurveyController;
@@ -27,6 +28,7 @@ const makeFakeRequest = (): IHttpRequest => ({
         answer: 'any_answer',
       },
     ],
+    date: new Date(),
   },
 });
 
@@ -63,6 +65,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe('AddSurvey Controller', () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  beforeAll(() => {
+    MockDate.reset();
+  });
+
   test('should call validation with correct values', async () => {
     const { sut, validationStub } = makeSut();
     const validateSpy = jest.spyOn(validationStub, 'validate');
