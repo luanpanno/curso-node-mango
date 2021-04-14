@@ -5,10 +5,10 @@ import { LoadSurveysRepository } from '../../protocols/db/survey/LoadSurveysRepo
 
 export class DbLoadSurveys implements LoadSurveys {
   constructor(private readonly loadSurveysRepository: LoadSurveysRepository) {}
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async load(): Promise<SurveyModel[]> {
-    await this.loadSurveysRepository.loadAll();
 
-    return Promise.resolve(null);
+  async load(): Promise<SurveyModel[]> {
+    const surveys = await this.loadSurveysRepository.loadAll();
+
+    return surveys;
   }
 }

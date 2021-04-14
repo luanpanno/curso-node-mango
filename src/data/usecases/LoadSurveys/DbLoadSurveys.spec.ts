@@ -28,8 +28,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
 const makeLoadSurveysRepository = (): LoadSurveysRepository => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // async loadAll(surveyData: AddSurveyModel): Promise<SurveyModel[]> {
-    async loadAll(): Promise<SurveyModel[]> {
+    async loadAll(surveyData?: AddSurveyModel): Promise<SurveyModel[]> {
       return Promise.resolve(makeFakeSurveys());
     }
   }
@@ -55,5 +54,12 @@ describe('DbLoadSurveys', () => {
     await sut.load();
 
     expect(loadAllSpy).toHaveBeenCalled();
+  });
+
+  test('should return a list of Surveys on success', async () => {
+    const { sut } = makeSut();
+    const surveys = await sut.load();
+
+    expect(surveys).toEqual(makeFakeSurveys());
   });
 });
