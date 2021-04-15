@@ -1,28 +1,28 @@
-import { ILogErrorRepository } from '@/data/protocols/db/ILogErrorRepository';
-import { IAccountModel } from '@/domain/models/IAccount';
+import { LogErrorRepository } from '@/data/protocols/db/LogErrorRepository';
+import { AccountModel } from '@/domain/models/Account';
 import { ok, serverError } from '@/presentation/helpers';
 import {
-  IController,
-  IHttpRequest,
-  IHttpResponse,
+  Controller,
+  HttpRequest,
+  HttpResponse,
 } from '@/presentation/protocols';
 
 import LogControllerDecorator from './Log';
 
 interface SutType {
   sut: LogControllerDecorator;
-  controllerStub: IController;
-  logErrorRepositoryStub: ILogErrorRepository;
+  controllerStub: Controller;
+  logErrorRepositoryStub: LogErrorRepository;
 }
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
 });
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
     email: 'any_email@mail.com',
@@ -31,24 +31,24 @@ const makeFakeRequest = (): IHttpRequest => ({
   },
 });
 
-const makeFakeServerError = (): IHttpResponse => {
+const makeFakeServerError = (): HttpResponse => {
   const fakeError = new Error();
   fakeError.stack = 'any_stack';
 
   return serverError(fakeError);
 };
 
-class ControllerStub implements IController {
+class ControllerStub implements Controller {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const httpResponse = ok(makeFakeAccount());
 
     return Promise.resolve(httpResponse);
   }
 }
 
-const makeLogErrorRepository = (): ILogErrorRepository => {
-  class LogErrorRepositoryStub implements ILogErrorRepository {
+const makeLogErrorRepository = (): LogErrorRepository => {
+  class LogErrorRepositoryStub implements LogErrorRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async logError(stackError: string): Promise<void> {
       return Promise.resolve();
@@ -58,7 +58,7 @@ const makeLogErrorRepository = (): ILogErrorRepository => {
   return new LogErrorRepositoryStub();
 };
 
-const makeController = (): IController => {
+const makeController = (): Controller => {
   return new ControllerStub();
 };
 

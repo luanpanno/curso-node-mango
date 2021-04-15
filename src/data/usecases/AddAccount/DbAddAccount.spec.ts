@@ -1,35 +1,35 @@
 /* eslint-disable @typescript-eslint/indent */
-import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
+import { LoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
 import DbAddAccount from './DbAddAccount';
 import {
-  IHasher,
-  IAccountModel,
-  IAddAccountModel,
-  IAddAccountRepository,
+  Hasher,
+  AccountModel,
+  AddAccountModel,
+  AddAccountRepository,
 } from './DbAddAccountProtocols';
 
 type SutTypes = {
   sut: DbAddAccount;
-  hasherStub: IHasher;
-  addAccountRepositoryStub: IAddAccountRepository;
-  loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
+  hasherStub: Hasher;
+  addAccountRepositoryStub: AddAccountRepository;
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository;
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
 });
 
-const makeFakeAccountData = (): IAddAccountModel => ({
+const makeFakeAccountData = (): AddAccountModel => ({
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
 });
 
-const makeHasher = (): IHasher => {
-  class HasherStub implements IHasher {
+const makeHasher = (): Hasher => {
+  class HasherStub implements Hasher {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async hash(value: string): Promise<string> {
       return Promise.resolve('hashed_password');
@@ -39,10 +39,10 @@ const makeHasher = (): IHasher => {
   return new HasherStub();
 };
 
-const makeAddAccountRepository = (): IAddAccountRepository => {
-  class AddAccountRepositoryStub implements IAddAccountRepository {
+const makeAddAccountRepository = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(account: IAddAccountModel): Promise<IAccountModel> {
+    async add(account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = makeFakeAccount();
 
       return Promise.resolve(fakeAccount);
@@ -52,11 +52,11 @@ const makeAddAccountRepository = (): IAddAccountRepository => {
   return new AddAccountRepositoryStub();
 };
 
-const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
+const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub
-    implements ILoadAccountByEmailRepository {
+    implements LoadAccountByEmailRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByEmail(email: string): Promise<IAccountModel> {
+    async loadByEmail(email: string): Promise<AccountModel> {
       return Promise.resolve(null);
     }
   }

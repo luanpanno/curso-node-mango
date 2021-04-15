@@ -1,21 +1,21 @@
 import {
-  IAuthenticationModel,
-  IHashComparer,
-  IEncrypter,
-  ILoadAccountByEmailRepository,
-  IUpdateAccessTokenRepository,
-  IAuthentication,
+  AuthenticationModel,
+  HashComparer,
+  Encrypter,
+  LoadAccountByEmailRepository,
+  UpdateAccessTokenRepository,
+  Authentication,
 } from './DbAuthentication.protocols';
 
-export class DbAuthentication implements IAuthentication {
+export class DbAuthentication implements Authentication {
   constructor(
-    private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository,
-    private readonly hashComparer: IHashComparer,
-    private readonly encrypter: IEncrypter,
-    private readonly updateAccessTokenRepository: IUpdateAccessTokenRepository
+    private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
+    private readonly hashComparer: HashComparer,
+    private readonly encrypter: Encrypter,
+    private readonly updateAccessTokenRepository: UpdateAccessTokenRepository
   ) {}
 
-  async auth(authentication: IAuthenticationModel): Promise<string> {
+  async auth(authentication: AuthenticationModel): Promise<string> {
     const { email, password } = authentication;
     const account = await this.loadAccountByEmailRepository.loadByEmail(email);
 

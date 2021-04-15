@@ -1,31 +1,31 @@
 import {
-  IAuthentication,
-  IAuthenticationModel,
-} from '@/domain/usecases/IAuthentication';
-import { IValidation } from '@/presentation/protocols/IValidation';
+  Authentication,
+  AuthenticationModel,
+} from '@/domain/usecases/Authentication';
+import { Validation } from '@/presentation/protocols/Validation';
 
 import { MissingParamError } from '../../../errors';
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
-import { IHttpRequest } from '../../../protocols/IHttp';
+import { HttpRequest } from '../../../protocols/Http';
 import LoginController from './Login';
 
 type SutTypes = {
   sut: LoginController;
-  authenticationStub: IAuthentication;
-  validationStub: IValidation;
+  authenticationStub: Authentication;
+  validationStub: Validation;
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     email: 'any_email@mail.com',
     password: 'any_password',
   },
 });
 
-const makeAuthentication = (): IAuthentication => {
-  class AuthenticationStub implements IAuthentication {
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(auth: IAuthenticationModel): Promise<string> {
+    async auth(auth: AuthenticationModel): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
@@ -33,8 +33,8 @@ const makeAuthentication = (): IAuthentication => {
   return new AuthenticationStub();
 };
 
-const makeValidation = (): IValidation => {
-  class ValidationStub implements IValidation {
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     validate(input: any): Error {
       return null;

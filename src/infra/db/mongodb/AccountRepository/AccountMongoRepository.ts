@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/indent */
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/LoadAccountByTokenRepository';
-import { IAddAccountRepository } from '@/data/protocols/db/IAddAccountRepository';
-import { ILoadAccountByEmailRepository } from '@/data/protocols/db/ILoadAccountByEmailRepository';
-import { IUpdateAccessTokenRepository } from '@/data/protocols/db/IUpdateAccessTokenRepository';
-import { IAccountModel } from '@/domain/models/IAccount';
-import { IAddAccountModel } from '@/domain/usecases/IAddAccount';
+import { AddAccountRepository } from '@/data/protocols/db/AddAccountRepository';
+import { LoadAccountByEmailRepository } from '@/data/protocols/db/LoadAccountByEmailRepository';
+import { UpdateAccessTokenRepository } from '@/data/protocols/db/UpdateAccessTokenRepository';
+import { AccountModel } from '@/domain/models/Account';
+import { AddAccountModel } from '@/domain/usecases/AddAccount';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 
 class AccountMongoRepository
   implements
-    IAddAccountRepository,
-    ILoadAccountByEmailRepository,
-    IUpdateAccessTokenRepository,
+    AddAccountRepository,
+    LoadAccountByEmailRepository,
+    UpdateAccessTokenRepository,
     LoadAccountByTokenRepository {
-  async add(accountData: IAddAccountModel): Promise<IAccountModel> {
+  async add(accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
 
     return MongoHelper.map(result.ops[0]);
   }
 
-  async loadByEmail(email: string): Promise<IAccountModel> {
+  async loadByEmail(email: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const account = await accountCollection.findOne({ email });
 
@@ -43,10 +43,7 @@ class AccountMongoRepository
     );
   }
 
-  async loadByToken(
-    accessToken: string,
-    role?: string
-  ): Promise<IAccountModel> {
+  async loadByToken(accessToken: string, role?: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const account = await accountCollection.findOne({
       accessToken,

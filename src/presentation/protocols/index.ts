@@ -1,2 +1,2 @@
-export * from './IController';
-export * from './IHttp';
+export * from './Controller';
+export * from './Http';

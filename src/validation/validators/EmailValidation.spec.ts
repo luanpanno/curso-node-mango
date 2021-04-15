@@ -1,15 +1,15 @@
 import { InvalidParamError } from '@/presentation/errors';
 
-import { IEmailValidator } from '../protocols/IEmailValidator';
+import { EmailValidator } from '../protocols/EmailValidator';
 import { EmailValidation } from './EmailValidation';
 
 type SutTypes = {
   sut: EmailValidation;
-  emailValidatorStub: IEmailValidator;
+  emailValidatorStub: EmailValidator;
 };
 
-const makeEmailValidator = (): IEmailValidator => {
-  class EmailValidatorStub implements IEmailValidator {
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isValid(email: string): boolean {
       return true;

@@ -1,15 +1,15 @@
 import { MissingParamError } from '@/presentation/errors';
-import { IValidation } from '@/presentation/protocols/IValidation';
+import { Validation } from '@/presentation/protocols/Validation';
 
 import { ValidationComposite } from './ValidationComposite';
 
 type SutTypes = {
   sut: ValidationComposite;
-  validationStubs: IValidation[];
+  validationStubs: Validation[];
 };
 
-const makeValidationStub = (): IValidation => {
-  class ValidationStub implements IValidation {
+const makeValidationStub = (): Validation => {
+  class ValidationStub implements Validation {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     validate(input: any): Error {
       return null;

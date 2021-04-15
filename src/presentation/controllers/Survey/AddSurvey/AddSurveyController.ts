@@ -1,16 +1,16 @@
 import { AddSurvey } from '@/domain/usecases/AddSurvey';
 
 import { badRequest, noContent, serverError } from '../../../helpers';
-import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
-import { IValidation } from '../../../protocols/IValidation';
+import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
+import { Validation } from '../../../protocols/Validation';
 
-export class AddSurveyController implements IController {
+export class AddSurveyController implements Controller {
   constructor(
-    private readonly validation: IValidation,
+    private readonly validation: Validation,
     private readonly addSurvey: AddSurvey
   ) {}
 
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body);
 

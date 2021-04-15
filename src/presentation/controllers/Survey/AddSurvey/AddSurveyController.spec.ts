@@ -8,17 +8,17 @@ import {
   serverError,
   noContent,
 } from '../../../helpers/http/httpHelper';
-import { IHttpRequest } from '../../../protocols';
-import { IValidation } from '../../../protocols/IValidation';
+import { HttpRequest } from '../../../protocols';
+import { Validation } from '../../../protocols/Validation';
 import { AddSurveyController } from './AddSurveyController';
 
 type SutTypes = {
   sut: AddSurveyController;
-  validationStub: IValidation;
+  validationStub: Validation;
   addSurveyStub: AddSurvey;
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     question: 'any_question',
     answers: [
@@ -31,8 +31,8 @@ const makeFakeRequest = (): IHttpRequest => ({
   },
 });
 
-const makeValidation = (): IValidation => {
-  class ValidationStub implements IValidation {
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
     validate(input: any): Error {
       return null;
     }

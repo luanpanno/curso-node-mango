@@ -1,5 +1,5 @@
-import { IValidation } from '@/presentation/protocols/IValidation';
-import { IEmailValidator } from '@/validation/protocols/IEmailValidator';
+import { Validation } from '@/presentation/protocols/Validation';
+import { EmailValidator } from '@/validation/protocols/EmailValidator';
 import {
   CompareFieldsValidation,
   EmailValidation,
@@ -11,8 +11,8 @@ import { makeSignupValidation } from './signupValidation';
 
 jest.mock('../../../../../validation/validators/ValidationComposite');
 
-const makeEmailValidator = (): IEmailValidator => {
-  class EmailValidatorStub implements IEmailValidator {
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isValid(email: string): boolean {
       return true;
@@ -26,7 +26,7 @@ describe('SignupValidation Factory', () => {
   test('should call ValidationComposite with all validations', () => {
     makeSignupValidation();
 
-    const validations: IValidation[] = [];
+    const validations: Validation[] = [];
 
     for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {
       validations.push(new RequiredFieldValidation(field));

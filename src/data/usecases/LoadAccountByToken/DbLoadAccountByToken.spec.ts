@@ -1,6 +1,6 @@
 import { Decrypter } from '../../protocols/criptography/Decrypter';
 import { LoadAccountByTokenRepository } from '../../protocols/db/account/LoadAccountByTokenRepository';
-import { IAccountModel } from '../authentication/DbAuthentication.protocols';
+import { AccountModel } from '../authentication/DbAuthentication.protocols';
 import { DbLoadAccountByToken } from './DbLoadAccountByToken';
 
 type SutTypes = {
@@ -9,7 +9,7 @@ type SutTypes = {
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@mail.com',
@@ -19,7 +19,7 @@ const makeFakeAccount = (): IAccountModel => ({
 const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
   class LoadAccountByTokenRepository implements LoadAccountByTokenRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByToken(token: string, role?: string): Promise<IAccountModel> {
+    async loadByToken(token: string, role?: string): Promise<AccountModel> {
       return Promise.resolve(makeFakeAccount());
     }
   }

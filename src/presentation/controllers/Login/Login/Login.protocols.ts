@@ -1,2 +1,2 @@
 export * from '../SignUp/SignUp.protocols';
-export * from '@/domain/usecases/IAuthentication';
+export * from '@/domain/usecases/Authentication';

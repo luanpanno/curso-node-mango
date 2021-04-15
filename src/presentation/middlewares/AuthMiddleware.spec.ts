@@ -1,25 +1,23 @@
+import { AccountModel } from '@/domain/models/Account';
+
 import { AccessDeniedError } from '../errors';
 import { forbidden, ok, serverError } from '../helpers/http/httpHelper';
 import { AuthMiddleware } from './AuthMiddleware';
-import {
-  LoadAccountByToken,
-  IHttpRequest,
-  IAccountModel,
-} from './AuthMiddleware.protocols';
+import { LoadAccountByToken, HttpRequest } from './AuthMiddleware.protocols';
 
 type SutTypes = {
   sut: AuthMiddleware;
   loadAccountByToken: any;
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
 });
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   headers: {
     'x-access-token': 'any_token',
   },
@@ -28,7 +26,7 @@ const makeFakeRequest = (): IHttpRequest => ({
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async load(accessToken: string): Promise<IAccountModel> {
+    async load(accessToken: string): Promise<AccountModel> {
       return Promise.resolve(makeFakeAccount());
     }
   }

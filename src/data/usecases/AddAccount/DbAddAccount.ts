@@ -1,20 +1,20 @@
-import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
+import { LoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
 import {
-  IAccountModel,
-  IAddAccount,
-  IAddAccountModel,
-  IHasher,
-  IAddAccountRepository,
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  Hasher,
+  AddAccountRepository,
 } from './DbAddAccountProtocols';
 
-class DbAddAccount implements IAddAccount {
+class DbAddAccount implements AddAccount {
   constructor(
-    private readonly hasher: IHasher,
-    private readonly addAccountRepository: IAddAccountRepository,
-    private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository
+    private readonly hasher: Hasher,
+    private readonly addAccountRepository: AddAccountRepository,
+    private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}
 
-  async add(accountData: IAddAccountModel): Promise<IAccountModel> {
+  async add(accountData: AddAccountModel): Promise<AccountModel> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(
       accountData.email
     );

@@ -1,39 +1,39 @@
 /* eslint-disable @typescript-eslint/indent */
 import { DbAuthentication } from './DbAuthentication';
 import {
-  IAccountModel,
-  IAuthenticationModel,
-  IHashComparer,
-  IEncrypter,
-  ILoadAccountByEmailRepository,
-  IUpdateAccessTokenRepository,
+  AccountModel,
+  AuthenticationModel,
+  HashComparer,
+  Encrypter,
+  LoadAccountByEmailRepository,
+  UpdateAccessTokenRepository,
 } from './DbAuthentication.protocols';
 
 type SutTypes = {
   sut: DbAuthentication;
-  loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
-  hashComparerStub: IHashComparer;
-  encrypterStub: IEncrypter;
-  updateAccessTokenRepositoryStub: IUpdateAccessTokenRepository;
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository;
+  hashComparerStub: HashComparer;
+  encrypterStub: Encrypter;
+  updateAccessTokenRepositoryStub: UpdateAccessTokenRepository;
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'any_id',
   name: 'any_name',
   email: 'any_email@mail.com',
   password: 'hashed_password',
 });
 
-const makeFakeAuthentication = (): IAuthenticationModel => ({
+const makeFakeAuthentication = (): AuthenticationModel => ({
   email: 'any_email@mail.com',
   password: 'any_password',
 });
 
-const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
+const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub
-    implements ILoadAccountByEmailRepository {
+    implements LoadAccountByEmailRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByEmail(email: string): Promise<IAccountModel> {
+    async loadByEmail(email: string): Promise<AccountModel> {
       return Promise.resolve(makeFakeAccount());
     }
   }
@@ -41,8 +41,8 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   return new LoadAccountByEmailRepositoryStub();
 };
 
-const makeHashComparer = (): IHashComparer => {
-  class HashComparerStub implements IHashComparer {
+const makeHashComparer = (): HashComparer => {
+  class HashComparerStub implements HashComparer {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async compare(value: string, hash: string): Promise<boolean> {
       return Promise.resolve(true);
@@ -52,8 +52,8 @@ const makeHashComparer = (): IHashComparer => {
   return new HashComparerStub();
 };
 
-const makeEncrypter = (): IEncrypter => {
-  class EncrypterStub implements IEncrypter {
+const makeEncrypter = (): Encrypter => {
+  class EncrypterStub implements Encrypter {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async encrypt(value: string): Promise<string> {
       return Promise.resolve('any_token');
@@ -63,9 +63,8 @@ const makeEncrypter = (): IEncrypter => {
   return new EncrypterStub();
 };
 
-const makeUpdateAccessTokenRepository = (): IUpdateAccessTokenRepository => {
-  class UpdateAccessTokenRepositoryStub
-    implements IUpdateAccessTokenRepository {
+const makeUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
+  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async updateAccessToken(id: string, token: string): Promise<void> {
       return Promise.resolve();

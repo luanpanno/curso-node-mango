@@ -1,22 +1,22 @@
 import { EmailInUseError } from '../../../errors';
 import { badRequest, forbidden, ok, serverError } from '../../../helpers';
-import { IValidation } from '../Login/Login.protocols';
+import { Validation } from '../Login/Login.protocols';
 import {
-  IAddAccount,
-  IHttpRequest,
-  IHttpResponse,
-  IController,
-  IAuthentication,
+  AddAccount,
+  HttpRequest,
+  HttpResponse,
+  Controller,
+  Authentication,
 } from './SignUp.protocols';
 
-export class SignUpController implements IController {
+export class SignUpController implements Controller {
   constructor(
-    private readonly addAccount: IAddAccount,
-    private readonly validation: IValidation,
-    private readonly authentication: IAuthentication
+    private readonly addAccount: AddAccount,
+    private readonly validation: Validation,
+    private readonly authentication: Authentication
   ) {}
 
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { name, email, password } = httpRequest.body;
       const error = this.validation.validate(httpRequest.body);

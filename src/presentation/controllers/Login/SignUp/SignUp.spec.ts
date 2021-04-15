@@ -4,32 +4,32 @@ import {
   ServerError,
 } from '../../../errors';
 import { badRequest, ok, serverError, forbidden } from '../../../helpers';
-import { IHttpRequest } from '../../../protocols';
+import { HttpRequest } from '../../../protocols';
 import { SignUpController } from './SignUp';
 import {
-  IAddAccount,
-  IAccountModel,
-  IAddAccountModel,
-  IValidation,
-  IAuthentication,
-  IAuthenticationModel,
+  AddAccount,
+  AccountModel,
+  AddAccountModel,
+  Validation,
+  Authentication,
+  AuthenticationModel,
 } from './SignUp.protocols';
 
 type SutTypes = {
   sut: SignUpController;
-  authenticationStub: IAuthentication;
-  addAccountStub: IAddAccount;
-  validationStub: IValidation;
+  authenticationStub: Authentication;
+  addAccountStub: AddAccount;
+  validationStub: Validation;
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
 });
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
     email: 'any_email@mail.com',
@@ -38,10 +38,10 @@ const makeFakeRequest = (): IHttpRequest => ({
   },
 });
 
-const makeAuthentication = (): IAuthentication => {
-  class AuthenticationStub implements IAuthentication {
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(auth: IAuthenticationModel): Promise<string> {
+    async auth(auth: AuthenticationModel): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
@@ -49,10 +49,10 @@ const makeAuthentication = (): IAuthentication => {
   return new AuthenticationStub();
 };
 
-const makeAddAccount = (): IAddAccount => {
-  class AddAccountStub implements IAddAccount {
+const makeAddAccount = (): AddAccount => {
+  class AddAccountStub implements AddAccount {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(account: IAddAccountModel): Promise<IAccountModel> {
+    async add(account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = makeFakeAccount();
 
       return new Promise((resolve) => resolve(fakeAccount));
@@ -62,8 +62,8 @@ const makeAddAccount = (): IAddAccount => {
   return new AddAccountStub();
 };
 
-const makeValidation = (): IValidation => {
-  class ValidationStub implements IValidation {
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     validate(input: any): Error {
       return null;

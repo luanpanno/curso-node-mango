@@ -1,5 +1,5 @@
-import { IAccountModel } from '../../../usecases/authentication/DbAuthentication.protocols';
+import { AccountModel } from '../../../usecases/authentication/DbAuthentication.protocols';
 
 export interface LoadAccountByTokenRepository {
-  loadByToken: (token: string, role?: string) => Promise<IAccountModel>;
+  loadByToken: (token: string, role?: string) => Promise<AccountModel>;
 }

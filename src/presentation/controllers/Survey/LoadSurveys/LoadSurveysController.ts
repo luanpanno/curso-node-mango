@@ -1,12 +1,12 @@
 import { LoadSurveys } from '@/domain/usecases/LoadSurveys';
 
 import { noContent, ok, serverError } from '../../../helpers';
-import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
+import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
 
-export class LoadSurveysController implements IController {
+export class LoadSurveysController implements Controller {
   constructor(private readonly loadSurveys: LoadSurveys) {}
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const surveys = await this.loadSurveys.load();
 

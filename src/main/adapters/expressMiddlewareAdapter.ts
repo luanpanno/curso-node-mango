@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { IHttpRequest } from '@/presentation/protocols';
+import { HttpRequest } from '@/presentation/protocols';
 import { Middleware } from '@/presentation/protocols/Middleware';
 
 export const adaptMiddleware = (middleware: Middleware) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const httpRequest: IHttpRequest = {
+    const httpRequest: HttpRequest = {
       headers: req.headers,
     };
 

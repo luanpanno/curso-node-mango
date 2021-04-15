@@ -1,9 +1,9 @@
-export type IHttpRequest = {
+export type HttpRequest = {
   body?: any;
   headers?: any;
 };
 
-export type IHttpResponse = {
+export type HttpResponse = {
   statusCode: number;
   body: any;
 };
