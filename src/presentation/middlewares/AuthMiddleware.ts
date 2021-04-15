@@ -1,11 +1,11 @@
 import { AccessDeniedError } from '../errors';
 import { forbidden, ok, serverError } from '../helpers';
+import { Middleware } from '../protocols/Middleware';
 import {
   IHttpRequest,
   IHttpResponse,
   LoadAccountByToken,
 } from './AuthMiddleware.protocols';
-import { Middleware } from '../protocols/Middleware';
 
 export class AuthMiddleware implements Middleware {
   constructor(

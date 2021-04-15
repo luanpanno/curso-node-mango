@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { JwtAdapter } from './JwtAdapter';
 
 interface SutTypes {

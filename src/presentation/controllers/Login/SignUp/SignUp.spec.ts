@@ -3,6 +3,9 @@ import {
   MissingParamError,
   ServerError,
 } from '../../../errors';
+import { badRequest, ok, serverError, forbidden } from '../../../helpers';
+import { IHttpRequest } from '../../../protocols';
+import { SignUpController } from './SignUp';
 import {
   IAddAccount,
   IAccountModel,
@@ -11,9 +14,6 @@ import {
   IAuthentication,
   IAuthenticationModel,
 } from './SignUp.protocols';
-import { SignUpController } from './SignUp';
-import { IHttpRequest } from '../../../protocols';
-import { badRequest, ok, serverError, forbidden } from '../../../helpers';
 
 interface SutTypes {
   sut: SignUpController;

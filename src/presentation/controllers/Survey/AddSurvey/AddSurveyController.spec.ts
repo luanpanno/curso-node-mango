@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IHttpRequest } from '../../../protocols';
-import { IValidation } from '../../../protocols/IValidation';
-import { AddSurveyController } from './AddSurveyController';
+import MockDate from 'mockdate';
+
+import {
+  AddSurvey,
+  AddSurveyModel,
+} from '../../../../domain/usecases/AddSurvey';
 import {
   badRequest,
   serverError,
   noContent,
 } from '../../../helpers/http/httpHelper';
-import {
-  AddSurvey,
-  AddSurveyModel,
-} from '../../../../domain/usecases/AddSurvey';
-import MockDate from 'mockdate';
+import { IHttpRequest } from '../../../protocols';
+import { IValidation } from '../../../protocols/IValidation';
+import { AddSurveyController } from './AddSurveyController';
 
 interface SutTypes {
   sut: AddSurveyController;

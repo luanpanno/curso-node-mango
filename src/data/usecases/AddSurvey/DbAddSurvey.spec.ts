@@ -1,7 +1,8 @@
+import MockDate from 'mockdate';
+
 import { AddSurveyModel } from '../../../domain/usecases/AddSurvey';
 import { AddSurveyRepository } from '../../protocols/db/survey/AddSurveyRepository';
 import { DbAddSurvey } from './DbAddSurvey';
-import MockDate from 'mockdate';
 
 interface SutTypes {
   sut: DbAddSurvey;

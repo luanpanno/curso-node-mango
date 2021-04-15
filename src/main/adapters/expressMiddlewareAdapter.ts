@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { IHttpRequest } from '../../presentation/protocols';
 import { Middleware } from '../../presentation/protocols/Middleware';
 

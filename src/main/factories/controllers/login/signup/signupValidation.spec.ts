@@ -1,12 +1,12 @@
+import { IValidation } from '../../../../../presentation/protocols/IValidation';
+import { IEmailValidator } from '../../../../../validation/protocols/IEmailValidator';
 import {
   CompareFieldsValidation,
   EmailValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '../../../../../validation/validators';
-import { IValidation } from '../../../../../presentation/protocols/IValidation';
 import { makeSignupValidation } from './signupValidation';
-import { IEmailValidator } from '../../../../../validation/protocols/IEmailValidator';
 
 jest.mock('../../../../../validation/validators/ValidationComposite');
 

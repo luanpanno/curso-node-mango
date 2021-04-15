@@ -2,11 +2,11 @@ import {
   IAuthentication,
   IAuthenticationModel,
 } from '../../../../domain/usecases/IAuthentication';
-import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
-import LoginController from './Login';
 import { IValidation } from '../../../../presentation/protocols/IValidation';
-import { IHttpRequest } from '../../../protocols/IHttp';
 import { MissingParamError } from '../../../errors';
+import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
+import { IHttpRequest } from '../../../protocols/IHttp';
+import LoginController from './Login';
 
 interface SutTypes {
   sut: LoginController;

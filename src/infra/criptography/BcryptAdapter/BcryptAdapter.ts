@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+
 import { IHashComparer } from '../../../data/protocols/criptography/IHashComparer';
 import { IHasher } from '../../../data/protocols/criptography/IHasher';
 

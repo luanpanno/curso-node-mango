@@ -1,8 +1,9 @@
-import { LoadSurveysController } from './LoadSurveysController';
+import MockDate from 'mockdate';
+
 import { SurveyModel } from '../../../../domain/models/SurveyModel';
 import { LoadSurveys } from '../../../../domain/usecases/LoadSurveys';
-import MockDate from 'mockdate';
 import { noContent, ok, serverError } from '../../../helpers';
+import { LoadSurveysController } from './LoadSurveysController';
 
 interface SutTypes {
   sut: LoadSurveysController;

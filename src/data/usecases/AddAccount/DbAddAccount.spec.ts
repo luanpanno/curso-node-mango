@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
+import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
+import DbAddAccount from './DbAddAccount';
 import {
   IHasher,
   IAccountModel,
   IAddAccountModel,
   IAddAccountRepository,
 } from './DbAddAccountProtocols';
-import DbAddAccount from './DbAddAccount';
-import { ILoadAccountByEmailRepository } from '../authentication/DbAuthentication.protocols';
 
 interface SutTypes {
   sut: DbAddAccount;

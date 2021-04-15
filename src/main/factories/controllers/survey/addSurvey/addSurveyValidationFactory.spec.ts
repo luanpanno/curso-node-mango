@@ -1,8 +1,8 @@
+import { IValidation } from '../../../../../presentation/protocols/IValidation';
 import {
   RequiredFieldValidation,
   ValidationComposite,
 } from '../../../../../validation/validators';
-import { IValidation } from '../../../../../presentation/protocols/IValidation';
 import { makeAddSurveyValidation } from './AddSurveyValidation';
 
 jest.mock('../../../../../validation/validators/ValidationComposite');

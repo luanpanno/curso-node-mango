@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { Decrypter } from '../../../data/protocols/criptography/Decrypter';
 import { IEncrypter } from '../../../data/protocols/criptography/IEncrypter';
 

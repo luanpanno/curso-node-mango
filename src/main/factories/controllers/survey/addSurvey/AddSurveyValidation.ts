@@ -1,4 +1,3 @@
-import { IController } from '../../../../../presentation/protocols';
 import { IValidation } from '../../../../../presentation/protocols/IValidation';
 import {
   RequiredFieldValidation,
