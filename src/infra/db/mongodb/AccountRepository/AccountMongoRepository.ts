@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
-import { LoadAccountByTokenRepository } from '@data/protocols/db/account/LoadAccountByTokenRepository';
-import { IAddAccountRepository } from '@data/protocols/db/IAddAccountRepository';
-import { ILoadAccountByEmailRepository } from '@data/protocols/db/ILoadAccountByEmailRepository';
-import { IUpdateAccessTokenRepository } from '@data/protocols/db/IUpdateAccessTokenRepository';
-import { IAccountModel } from '@domain/models/IAccount';
-import { IAddAccountModel } from '@domain/usecases/IAddAccount';
+import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/LoadAccountByTokenRepository';
+import { IAddAccountRepository } from '@/data/protocols/db/IAddAccountRepository';
+import { ILoadAccountByEmailRepository } from '@/data/protocols/db/ILoadAccountByEmailRepository';
+import { IUpdateAccessTokenRepository } from '@/data/protocols/db/IUpdateAccessTokenRepository';
+import { IAccountModel } from '@/domain/models/IAccount';
+import { IAddAccountModel } from '@/domain/usecases/IAddAccount';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 

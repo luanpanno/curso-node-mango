@@ -1,4 +1,5 @@
-import { LoadSurveys } from '../../../../domain/usecases/LoadSurveys';
+import { LoadSurveys } from '@/domain/usecases/LoadSurveys';
+
 import { noContent, ok, serverError } from '../../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
 

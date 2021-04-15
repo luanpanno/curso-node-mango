@@ -1,5 +1,6 @@
-import { SignUpController } from '../../../../../presentation/controllers/Login/SignUp/SignUp';
-import { IController } from '../../../../../presentation/protocols';
+import { SignUpController } from '@/presentation/controllers/Login/SignUp/SignUp';
+import { IController } from '@/presentation/protocols';
+
 import { makeLogControllerDecorator } from '../../../decorators/LogControllerDecoratorFactory';
 import { makeDbAddAccount } from '../../../usecases/account/AddAccount/DbAddAccountFactory';
 import { makeDbAuthentication } from '../../../usecases/account/Authentication/DbAuthenticationFactory';

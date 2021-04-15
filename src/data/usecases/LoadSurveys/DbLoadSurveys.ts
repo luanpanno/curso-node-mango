@@ -1,5 +1,5 @@
-import { SurveyModel } from '@domain/models/SurveyModel';
-import { LoadSurveys } from '@domain/usecases/LoadSurveys';
+import { SurveyModel } from '@/domain/models/SurveyModel';
+import { LoadSurveys } from '@/domain/usecases/LoadSurveys';
 
 import { LoadSurveysRepository } from '../../protocols/db/survey/LoadSurveysRepository';
 

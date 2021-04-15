@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
-import { AddSurveyRepository } from '@data/protocols/db/survey/AddSurveyRepository';
-import { LoadSurveysRepository } from '@data/protocols/db/survey/LoadSurveysRepository';
-import { SurveyModel } from '@domain/models/SurveyModel';
-import { AddSurveyModel } from '@domain/usecases/AddSurvey';
+import { AddSurveyRepository } from '@/data/protocols/db/survey/AddSurveyRepository';
+import { LoadSurveysRepository } from '@/data/protocols/db/survey/LoadSurveysRepository';
+import { SurveyModel } from '@/domain/models/SurveyModel';
+import { AddSurveyModel } from '@/domain/usecases/AddSurvey';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 

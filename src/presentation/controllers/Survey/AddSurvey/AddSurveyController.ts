@@ -1,4 +1,5 @@
-import { AddSurvey } from '../../../../domain/usecases/AddSurvey';
+import { AddSurvey } from '@/domain/usecases/AddSurvey';
+
 import { badRequest, noContent, serverError } from '../../../helpers';
 import { IController, IHttpRequest, IHttpResponse } from '../../../protocols';
 import { IValidation } from '../../../protocols/IValidation';

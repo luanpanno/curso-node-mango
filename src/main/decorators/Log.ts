@@ -1,9 +1,9 @@
-import { ILogErrorRepository } from '../../data/protocols/db/ILogErrorRepository';
+import { ILogErrorRepository } from '@/data/protocols/db/ILogErrorRepository';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
-} from '../../presentation/protocols';
+} from '@/presentation/protocols';
 
 class LogControllerDecorator implements IController {
   constructor(

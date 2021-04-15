@@ -1,8 +1,9 @@
 import {
   IAuthentication,
   IAuthenticationModel,
-} from '../../../../domain/usecases/IAuthentication';
-import { IValidation } from '../../../../presentation/protocols/IValidation';
+} from '@/domain/usecases/IAuthentication';
+import { IValidation } from '@/presentation/protocols/IValidation';
+
 import { MissingParamError } from '../../../errors';
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
 import { IHttpRequest } from '../../../protocols/IHttp';

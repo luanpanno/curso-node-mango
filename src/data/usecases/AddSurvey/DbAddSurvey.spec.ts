@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 
-import { AddSurveyModel } from '@domain/usecases/AddSurvey';
+import { AddSurveyModel } from '@/domain/usecases/AddSurvey';
 
 import { AddSurveyRepository } from '../../protocols/db/survey/AddSurveyRepository';
 import { DbAddSurvey } from './DbAddSurvey';
