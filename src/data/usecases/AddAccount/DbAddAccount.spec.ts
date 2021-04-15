@@ -8,12 +8,12 @@ import {
   IAddAccountRepository,
 } from './DbAddAccountProtocols';
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAddAccount;
   hasherStub: IHasher;
   addAccountRepositoryStub: IAddAccountRepository;
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
-}
+};
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',

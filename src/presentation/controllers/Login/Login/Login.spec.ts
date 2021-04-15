@@ -9,11 +9,11 @@ import { badRequest, ok, serverError, unauthorized } from '../../../helpers';
 import { IHttpRequest } from '../../../protocols/IHttp';
 import LoginController from './Login';
 
-interface SutTypes {
+type SutTypes = {
   sut: LoginController;
   authenticationStub: IAuthentication;
   validationStub: IValidation;
-}
+};
 
 const makeFakeRequest = (): IHttpRequest => ({
   body: {

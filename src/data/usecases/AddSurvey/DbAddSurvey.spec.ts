@@ -5,10 +5,10 @@ import { AddSurveyModel } from '@/domain/usecases/AddSurvey';
 import { AddSurveyRepository } from '../../protocols/db/survey/AddSurveyRepository';
 import { DbAddSurvey } from './DbAddSurvey';
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAddSurvey;
   addSurveyRepositoryStub: AddSurveyRepository;
-}
+};
 
 const makeFakeSurveyData = (): AddSurveyModel => ({
   question: 'any_question',

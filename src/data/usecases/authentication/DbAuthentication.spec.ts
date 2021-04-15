@@ -9,13 +9,13 @@ import {
   IUpdateAccessTokenRepository,
 } from './DbAuthentication.protocols';
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAuthentication;
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
   hashComparerStub: IHashComparer;
   encrypterStub: IEncrypter;
   updateAccessTokenRepositoryStub: IUpdateAccessTokenRepository;
-}
+};
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'any_id',

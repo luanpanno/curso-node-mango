@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 
 import { JwtAdapter } from './JwtAdapter';
 
-interface SutTypes {
+type SutTypes = {
   sut: JwtAdapter;
-}
+};
 
 const makeSut = (): SutTypes => {
   const sut = new JwtAdapter('secret');

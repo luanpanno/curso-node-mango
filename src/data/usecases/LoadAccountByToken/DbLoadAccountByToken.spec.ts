@@ -3,11 +3,11 @@ import { LoadAccountByTokenRepository } from '../../protocols/db/account/LoadAcc
 import { IAccountModel } from '../authentication/DbAuthentication.protocols';
 import { DbLoadAccountByToken } from './DbLoadAccountByToken';
 
-interface SutTypes {
+type SutTypes = {
   sut: DbLoadAccountByToken;
   decrypterStub: Decrypter;
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
-}
+};
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',

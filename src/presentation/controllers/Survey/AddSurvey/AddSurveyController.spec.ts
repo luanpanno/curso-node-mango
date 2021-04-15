@@ -12,11 +12,11 @@ import { IHttpRequest } from '../../../protocols';
 import { IValidation } from '../../../protocols/IValidation';
 import { AddSurveyController } from './AddSurveyController';
 
-interface SutTypes {
+type SutTypes = {
   sut: AddSurveyController;
   validationStub: IValidation;
   addSurveyStub: AddSurvey;
-}
+};
 
 const makeFakeRequest = (): IHttpRequest => ({
   body: {

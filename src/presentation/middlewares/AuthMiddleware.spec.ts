@@ -7,10 +7,10 @@ import {
   IAccountModel,
 } from './AuthMiddleware.protocols';
 
-interface SutTypes {
+type SutTypes = {
   sut: AuthMiddleware;
   loadAccountByToken: any;
-}
+};
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',

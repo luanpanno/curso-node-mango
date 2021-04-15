@@ -15,12 +15,12 @@ import {
   IAuthenticationModel,
 } from './SignUp.protocols';
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController;
   authenticationStub: IAuthentication;
   addAccountStub: IAddAccount;
   validationStub: IValidation;
-}
+};
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',

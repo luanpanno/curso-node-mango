@@ -3,10 +3,10 @@ import { IValidation } from '@/presentation/protocols/IValidation';
 
 import { ValidationComposite } from './ValidationComposite';
 
-interface SutTypes {
+type SutTypes = {
   sut: ValidationComposite;
   validationStubs: IValidation[];
-}
+};
 
 const makeValidationStub = (): IValidation => {
   class ValidationStub implements IValidation {

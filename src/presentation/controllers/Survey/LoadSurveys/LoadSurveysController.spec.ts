@@ -6,10 +6,10 @@ import { LoadSurveys } from '@/domain/usecases/LoadSurveys';
 import { noContent, ok, serverError } from '../../../helpers';
 import { LoadSurveysController } from './LoadSurveysController';
 
-interface SutTypes {
+type SutTypes = {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
-}
+};
 
 const makeFakeSurveys = (): SurveyModel[] => {
   return [
