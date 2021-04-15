@@ -2,7 +2,7 @@
   "extends": "standard-with-typescript",
   "plugins": ["import-helpers"],
   "parserOptions": {
-    "project": "./tsconfig.eslint.json"
+    "project": "./tsconfig.json"
   },
   "rules": {
     "import-helpers/order-imports": [

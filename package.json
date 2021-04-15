@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/main/server.js",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down",
     "dev": "tsc -w",
@@ -53,7 +53,11 @@
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.6.4",
     "validator": "^13.5.2"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }
