@@ -70,4 +70,15 @@ describe('Survey Mongo Repository', () => {
       expect(surveys?.length).toBe(0);
     });
   });
+
+  describe('loadById()', () => {
+    test('should loadById surveys on success', async () => {
+      const res = await surveyCollection.insertOne(makeFakeSurveyData());
+      const id = res.ops[0]._id;
+      const sut = makeSut();
+      const survey = await sut.loadById(id);
+
+      expect(survey).toBeTruthy();
+    });
+  });
 });
