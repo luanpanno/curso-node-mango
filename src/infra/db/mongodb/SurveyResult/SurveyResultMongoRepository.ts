@@ -1,0 +1,33 @@
+import { SaveSurveyResultRepository } from '@/data/protocols/db/survey/SaveSurveyResultRepository';
+import { SurveyResultModel } from '@/domain/models/SurveyResult';
+import { SaveSurveyResultModel } from '@/domain/usecases/SaveSurveyResult';
+
+import { MongoHelper } from '../helpers/MongoHelper';
+
+export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    const surveyResultCollection = await MongoHelper.getCollection(
+      'surveyResults'
+    );
+
+    const surveyResult = await surveyResultCollection.findOneAndUpdate(
+      {
+        surveyId: data.surveyId,
+        accountId: data.accountId,
+      },
+      {
+        $set: {
+          answer: data.answer,
+          date: data.date,
+        },
+      },
+      {
+        upsert: true,
+        returnOriginal: false,
+      }
+    );
+
+    return surveyResult.value && MongoHelper.map(surveyResult.value);
+  }
+}
