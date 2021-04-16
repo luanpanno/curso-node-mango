@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import MockDate from 'mockdate';
 
-import { AddSurvey, AddSurveyModel } from '@/domain/usecases/AddSurvey';
+import { AddSurvey, AddSurveyModel } from '@/domain/usecases/survey/AddSurvey';
 
 import {
   badRequest,

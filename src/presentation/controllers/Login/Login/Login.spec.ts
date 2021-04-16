@@ -1,7 +1,7 @@
 import {
   Authentication,
   AuthenticationModel,
-} from '@/domain/usecases/Authentication';
+} from '@/domain/usecases/account/Authentication';
 import { Validation } from '@/presentation/protocols/Validation';
 
 import { MissingParamError } from '../../../errors';
