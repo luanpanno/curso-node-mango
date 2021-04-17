@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
+import { ObjectId } from 'bson';
+
 import { AddSurveyRepository } from '@/data/protocols/db/survey/AddSurveyRepository';
 import { LoadSurveysRepository } from '@/data/protocols/db/survey/LoadSurveysRepository';
 import { SurveyModel } from '@/domain/models/SurveyModel';
@@ -24,7 +26,9 @@ export class SurveyMongoRepository
 
   async loadById(id: string): Promise<SurveyModel> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
-    const survey = await surveyCollection.findOne<SurveyModel>({ _id: id });
+    const survey = await surveyCollection.findOne<SurveyModel>({
+      _id: new ObjectId(id),
+    });
 
     return survey && MongoHelper.map(survey);
   }
