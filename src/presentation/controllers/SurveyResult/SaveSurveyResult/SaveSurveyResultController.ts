@@ -1,4 +1,6 @@
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
+import { InvalidParamError } from '@/presentation/errors';
+import { forbidden } from '@/presentation/helpers';
 import {
   Controller,
   HttpRequest,
@@ -10,7 +12,11 @@ export class SaveSurveyResultController implements Controller {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveyById.loadById(httpRequest.params.surveyId);
+    const survey = await this.loadSurveyById.loadById(
+      httpRequest.params.surveyId
+    );
+
+    if (!survey) return forbidden(new InvalidParamError('surveyId'));
 
     return null;
   }
