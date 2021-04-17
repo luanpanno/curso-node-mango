@@ -1,4 +1,5 @@
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
+import { SaveSurveyResult } from '@/domain/usecases/surveyResult/SaveSurveyResult';
 import { InvalidParamError } from '@/presentation/errors';
 import { forbidden, serverError } from '@/presentation/helpers';
 import {
@@ -8,11 +9,15 @@ import {
 } from '@/presentation/protocols';
 
 export class SaveSurveyResultController implements Controller {
-  constructor(private readonly loadSurveyById: LoadSurveyById) {}
+  constructor(
+    private readonly loadSurveyById: LoadSurveyById,
+    private readonly saveSurveyResult: SaveSurveyResult
+  ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      const { accountId } = httpRequest;
       const { surveyId } = httpRequest.params;
       const { answer } = httpRequest.body;
       const survey = await this.loadSurveyById.loadById(surveyId);
@@ -24,6 +29,13 @@ export class SaveSurveyResultController implements Controller {
           return forbidden(new InvalidParamError('answer'));
         }
       } else return forbidden(new InvalidParamError('surveyId'));
+
+      await this.saveSurveyResult.save({
+        accountId,
+        surveyId,
+        answer,
+        date: new Date(),
+      });
 
       return null;
     } catch (error) {
