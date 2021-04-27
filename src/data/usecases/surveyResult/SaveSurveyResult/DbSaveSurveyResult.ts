@@ -2,7 +2,7 @@ import { SaveSurveyResultRepository } from '@/data/protocols/db/surveyResult/Sav
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import {
   SaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
 } from '@/domain/usecases/surveyResult/SaveSurveyResult';
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
@@ -10,7 +10,7 @@ export class DbSaveSurveyResult implements SaveSurveyResult {
     private readonly saveSurveyResultRepository: SaveSurveyResultRepository
   ) {}
 
-  async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+  async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResult = await this.saveSurveyResultRepository.save(data);
 
     return surveyResult;

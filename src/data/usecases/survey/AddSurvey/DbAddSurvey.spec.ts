@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 
-import { AddSurveyModel } from '@/domain/usecases/survey/AddSurvey';
+import { AddSurveyParams } from '@/domain/usecases/survey/AddSurvey';
 
 import { AddSurveyRepository } from '../../../protocols/db/survey/AddSurveyRepository';
 import { DbAddSurvey } from './DbAddSurvey';
@@ -10,7 +10,7 @@ type SutTypes = {
   addSurveyRepositoryStub: AddSurveyRepository;
 };
 
-const makeFakeSurveyData = (): AddSurveyModel => ({
+const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
   answers: [
     {
@@ -24,7 +24,7 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
 const makeAddSurveyRepository = (): AddSurveyRepository => {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(surveyData: AddSurveyModel): Promise<void> {
+    async add(surveyData: AddSurveyParams): Promise<void> {
       return Promise.resolve(null);
     }
   }

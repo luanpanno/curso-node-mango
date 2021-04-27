@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
-import { SaveSurveyResultModel } from '@/domain/usecases/surveyResult/SaveSurveyResult';
+import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurveyResult';
 
 import { SaveSurveyResultRepository } from '../../../protocols/db/surveyResult/SaveSurveyResultRepository';
 import { DbSaveSurveyResult } from './DbSaveSurveyResult';
@@ -11,7 +11,7 @@ type SutTypes = {
   saveSurveyResultRepositoryStub: SaveSurveyResultRepository;
 };
 
-const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
+const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
   accountId: 'any_account_id',
   surveyId: 'any_survey_id',
   answer: 'any_answer',
@@ -26,7 +26,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 const makeSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return Promise.resolve(makeFakeSurveyResult());
     }
   }

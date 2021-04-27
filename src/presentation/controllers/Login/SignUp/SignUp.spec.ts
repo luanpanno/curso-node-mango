@@ -9,10 +9,10 @@ import { SignUpController } from './SignUp';
 import {
   AddAccount,
   AccountModel,
-  AddAccountModel,
+  AddAccountParams,
   Validation,
   Authentication,
-  AuthenticationModel,
+  AuthenticationParams,
 } from './SignUp.protocols';
 
 type SutTypes = {
@@ -41,7 +41,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(auth: AuthenticationModel): Promise<string> {
+    async auth(auth: AuthenticationParams): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
@@ -52,7 +52,7 @@ const makeAuthentication = (): Authentication => {
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(account: AddAccountParams): Promise<AccountModel> {
       const fakeAccount = makeFakeAccount();
 
       return new Promise((resolve) => resolve(fakeAccount));

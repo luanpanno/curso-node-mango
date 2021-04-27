@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import MockDate from 'mockdate';
 
-import { AddSurvey, AddSurveyModel } from '@/domain/usecases/survey/AddSurvey';
+import { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/AddSurvey';
 
 import {
   badRequest,
@@ -43,7 +43,7 @@ const makeValidation = (): Validation => {
 
 const makeAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
-    async add(data: AddSurveyModel): Promise<void> {
+    async add(data: AddSurveyParams): Promise<void> {
       return Promise.resolve(null);
     }
   }

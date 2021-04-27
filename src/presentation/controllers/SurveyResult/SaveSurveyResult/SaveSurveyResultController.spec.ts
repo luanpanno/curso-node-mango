@@ -5,7 +5,7 @@ import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
 import {
   SaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
 } from '@/domain/usecases/surveyResult/SaveSurveyResult';
 import { InvalidParamError } from '@/presentation/errors';
 import { forbidden, ok, serverError } from '@/presentation/helpers';
@@ -58,7 +58,7 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return Promise.resolve(makeFakeSurveyResult());
     }
   }

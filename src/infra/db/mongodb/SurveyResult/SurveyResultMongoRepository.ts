@@ -1,12 +1,12 @@
 import { SaveSurveyResultRepository } from '@/data/protocols/db/surveyResult/SaveSurveyResultRepository';
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
-import { SaveSurveyResultModel } from '@/domain/usecases/surveyResult/SaveSurveyResult';
+import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurveyResult';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+  async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
       'surveyResults'
     );

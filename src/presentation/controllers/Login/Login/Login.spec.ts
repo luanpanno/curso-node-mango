@@ -1,6 +1,6 @@
 import {
   Authentication,
-  AuthenticationModel,
+  AuthenticationParams,
 } from '@/domain/usecases/account/Authentication';
 import { Validation } from '@/presentation/protocols/Validation';
 
@@ -25,7 +25,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(auth: AuthenticationModel): Promise<string> {
+    async auth(auth: AuthenticationParams): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
