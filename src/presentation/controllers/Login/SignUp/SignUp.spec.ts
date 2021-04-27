@@ -1,4 +1,5 @@
 import { AccountModel } from '@/domain/models/Account';
+import { mockAccountModel } from '@/domain/test/mockAccount';
 import {
   AddAccount,
   AddAccountParams,
@@ -25,13 +26,6 @@ type SutTypes = {
   validationStub: Validation;
 };
 
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password',
-});
-
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
@@ -56,7 +50,7 @@ const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async add(account: AddAccountParams): Promise<AccountModel> {
-      const fakeAccount = makeFakeAccount();
+      const fakeAccount = mockAccountModel();
 
       return new Promise((resolve) => resolve(fakeAccount));
     }

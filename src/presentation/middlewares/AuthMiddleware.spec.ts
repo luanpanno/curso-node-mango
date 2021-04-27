@@ -1,4 +1,5 @@
 import { AccountModel } from '@/domain/models/Account';
+import { mockAccountModel } from '@/domain/test/mockAccount';
 import { LoadAccountByToken } from '@/domain/usecases/account/LoadAccountByToken';
 
 import { AccessDeniedError } from '../errors';
@@ -11,13 +12,6 @@ type SutTypes = {
   loadAccountByToken: any;
 };
 
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password',
-});
-
 const makeFakeRequest = (): HttpRequest => ({
   headers: {
     'x-access-token': 'any_token',
@@ -28,7 +22,7 @@ const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async load(accessToken: string): Promise<AccountModel> {
-      return Promise.resolve(makeFakeAccount());
+      return Promise.resolve(mockAccountModel());
     }
   }
 
@@ -79,7 +73,7 @@ describe('Auth Middleware', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeFakeRequest());
 
-    expect(httpResponse).toEqual(ok({ accountId: 'valid_id' }));
+    expect(httpResponse).toEqual(ok({ accountId: 'any_id' }));
   });
 
   test('should return 500 if LoadAccountByToken throws', async () => {

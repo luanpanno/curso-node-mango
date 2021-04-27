@@ -1,4 +1,7 @@
+import { mockDecrypter } from '@/data/test/mockCriptography';
+import { mockLoadAccountByTokenRepository } from '@/data/test/mockDbAccount';
 import { AccountModel } from '@/domain/models/Account';
+import { mockAccountModel } from '@/domain/test/mockAccount';
 
 import { Decrypter } from '../../../protocols/criptography/Decrypter';
 import { LoadAccountByTokenRepository } from '../../../protocols/db/account/LoadAccountByTokenRepository';
@@ -10,38 +13,9 @@ type SutTypes = {
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 };
 
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password',
-});
-
-const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepository implements LoadAccountByTokenRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByToken(token: string, role?: string): Promise<AccountModel> {
-      return Promise.resolve(makeFakeAccount());
-    }
-  }
-
-  return new LoadAccountByTokenRepository();
-};
-
-const makeDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async decrypt(value: string): Promise<string> {
-      return Promise.resolve('any_value');
-    }
-  }
-
-  return new DecrypterStub();
-};
-
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypter();
-  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepository();
+  const decrypterStub = mockDecrypter();
+  const loadAccountByTokenRepositoryStub = mockLoadAccountByTokenRepository();
   const sut = new DbLoadAccountByToken(
     decrypterStub,
     loadAccountByTokenRepositoryStub
@@ -105,7 +79,7 @@ describe('DbLoadAccountByToken usecase', () => {
 
     const account = await sut.load('any_token', 'any_role');
 
-    expect(account).toEqual(makeFakeAccount());
+    expect(account).toEqual(mockAccountModel());
   });
 
   test('should throw if Decrypter throws', async () => {

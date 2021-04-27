@@ -2,6 +2,8 @@ import MockDate from 'mockdate';
 
 import { SurveyModel } from '@/domain/models/SurveyModel';
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
+import { mockSurveyModel } from '@/domain/test/mockSurvey';
+import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult';
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
 import {
   SaveSurveyResult,
@@ -29,26 +31,11 @@ const makeFakeRequest = (): HttpRequest => ({
   accountId: 'any_account_id',
 });
 
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_id',
-  question: 'any_question',
-  answers: [{ image: 'any_image', answer: 'any_answer' }],
-  date: new Date(),
-});
-
-const makeFakeSurveyResult = (): SurveyResultModel => ({
-  id: 'valid_id',
-  surveyId: 'valid_survey_id',
-  accountId: 'valid_account_id',
-  date: new Date(),
-  answer: 'valid_answer',
-});
-
 const makeLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(makeFakeSurvey());
+      return Promise.resolve(mockSurveyModel());
     }
   }
 
@@ -59,7 +46,7 @@ const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return Promise.resolve(makeFakeSurveyResult());
+      return Promise.resolve(mockSurveyResultModel());
     }
   }
 
@@ -168,6 +155,6 @@ describe('SaveSurveyResultController', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeFakeRequest());
 
-    expect(httpResponse).toEqual(ok(makeFakeSurveyResult()));
+    expect(httpResponse).toEqual(ok(mockSurveyResultModel()));
   });
 });

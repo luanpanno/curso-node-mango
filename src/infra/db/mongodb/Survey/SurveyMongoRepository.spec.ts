@@ -1,18 +1,10 @@
 import { Collection } from 'mongodb';
 
+import { mockAddSurveyParams } from '@/domain/test/mockSurvey';
 import { AddSurveyParams } from '@/domain/usecases/survey/AddSurvey';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 import { SurveyMongoRepository } from './SurveyMongoRepository';
-
-const makeFakeSurveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-  answers: [
-    { image: 'any_image', answer: 'any_answer' },
-    { answer: 'any_answer' },
-  ],
-  date: new Date(),
-});
 
 const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository();
@@ -39,7 +31,7 @@ describe('Survey Mongo Repository', () => {
     test('should add a survey on success', async () => {
       const sut = makeSut();
 
-      await sut.add(makeFakeSurveyData());
+      await sut.add(mockAddSurveyParams());
 
       const survey = await surveyCollection.findOne({
         question: 'any_question',
@@ -52,8 +44,8 @@ describe('Survey Mongo Repository', () => {
   describe('loadAll()', () => {
     test('should loadAll surveys on success', async () => {
       await surveyCollection.insertMany([
-        makeFakeSurveyData(),
-        makeFakeSurveyData(),
+        mockAddSurveyParams(),
+        mockAddSurveyParams(),
       ]);
 
       const sut = makeSut();
@@ -74,7 +66,7 @@ describe('Survey Mongo Repository', () => {
 
   describe('loadById()', () => {
     test('should loadById surveys on success', async () => {
-      const res = await surveyCollection.insertOne(makeFakeSurveyData());
+      const res = await surveyCollection.insertOne(mockAddSurveyParams());
       const id = res.ops[0]._id;
       const sut = makeSut();
       const survey = await sut.loadById(id);
