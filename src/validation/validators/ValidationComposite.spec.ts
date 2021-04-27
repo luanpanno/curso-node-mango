@@ -1,6 +1,7 @@
 import { MissingParamError } from '@/presentation/errors';
 import { Validation } from '@/presentation/protocols/Validation';
 
+import { mockValidation } from '../test/mockValidation';
 import { ValidationComposite } from './ValidationComposite';
 
 type SutTypes = {
@@ -8,19 +9,8 @@ type SutTypes = {
   validationStubs: Validation[];
 };
 
-const makeValidationStub = (): Validation => {
-  class ValidationStub implements Validation {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    validate(input: any): Error {
-      return null;
-    }
-  }
-
-  return new ValidationStub();
-};
-
 const makeSut = (): SutTypes => {
-  const validationStubs = [makeValidationStub(), makeValidationStub()];
+  const validationStubs = [mockValidation(), mockValidation()];
   const sut = new ValidationComposite(validationStubs);
 
   return {
