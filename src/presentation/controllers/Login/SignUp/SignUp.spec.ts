@@ -1,3 +1,14 @@
+import { AccountModel } from '@/domain/models/Account';
+import {
+  AddAccount,
+  AddAccountParams,
+} from '@/domain/usecases/account/AddAccount';
+import {
+  Authentication,
+  AuthenticationParams,
+} from '@/domain/usecases/account/Authentication';
+import { Validation } from '@/presentation/protocols/Validation';
+
 import {
   EmailInUseError,
   MissingParamError,
@@ -6,14 +17,6 @@ import {
 import { badRequest, ok, serverError, forbidden } from '../../../helpers';
 import { HttpRequest } from '../../../protocols';
 import { SignUpController } from './SignUp';
-import {
-  AddAccount,
-  AccountModel,
-  AddAccountParams,
-  Validation,
-  Authentication,
-  AuthenticationParams,
-} from './SignUp.protocols';
 
 type SutTypes = {
   sut: SignUpController;

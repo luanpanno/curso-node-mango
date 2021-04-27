@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
+import { Encrypter } from '@/data/protocols/criptography/Encrypter';
+import { HashComparer } from '@/data/protocols/criptography/HashComparer';
+import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/LoadAccountByEmailRepository';
+import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/UpdateAccessTokenRepository';
+import { AccountModel } from '@/domain/models/Account';
+import { AuthenticationParams } from '@/domain/usecases/account/Authentication';
+
 import { DbAuthentication } from './DbAuthentication';
-import {
-  AccountModel,
-  AuthenticationParams,
-  HashComparer,
-  Encrypter,
-  LoadAccountByEmailRepository,
-  UpdateAccessTokenRepository,
-} from './DbAuthentication.protocols';
 
 type SutTypes = {
   sut: DbAuthentication;
