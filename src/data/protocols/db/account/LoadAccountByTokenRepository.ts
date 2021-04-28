@@ -1,4 +1,4 @@
-import { AccountModel } from '../../../usecases/account/authentication/DbAuthentication.protocols';
+import { AccountModel } from '@/domain/models/Account';
 
 export interface LoadAccountByTokenRepository {
   loadByToken: (token: string, role?: string) => Promise<AccountModel>;
