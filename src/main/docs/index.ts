@@ -6,13 +6,16 @@ import { unauthorized } from './components/unauthorized';
 import { loginPath } from './paths/loginPath';
 import { signupPath } from './paths/signupPath';
 import { surveyPath } from './paths/surveyPath';
+import { surveyResultPath } from './paths/surveyResultPath';
 import { accountSchema } from './schemas/accountSchema';
 import { addSurveyParamsSchema } from './schemas/addSurveyParamsSchema';
 import { apiKeyAuthSchema } from './schemas/apiKeyAuthSchema';
 import { errorSchema } from './schemas/errorSchema';
 import { loginParamsSchema } from './schemas/loginParamsSchema';
+import { saveSurveyParamsSchema } from './schemas/saveSurveyParamsSchema';
 import { signupParamsSchema } from './schemas/signupParamsSchema';
 import { surveyAnswerSchema } from './schemas/surveyAnswerSchema';
+import { surveyResultSchema } from './schemas/surveyResultSchema';
 import { surveySchema } from './schemas/surveySchema';
 import { surveysSchema } from './schemas/surveysSchema';
 
@@ -41,6 +44,7 @@ export default {
     '/login': loginPath,
     '/signup': signupPath,
     '/surveys': surveyPath,
+    '/surveys/:surveyId/results': surveyResultPath,
   },
   schemas: {
     account: accountSchema,
@@ -51,6 +55,8 @@ export default {
     surveyAnswer: surveyAnswerSchema,
     signupParams: signupParamsSchema,
     addSurveyParams: addSurveyParamsSchema,
+    saveSurveyParams: saveSurveyParamsSchema,
+    surveyResult: surveyResultSchema,
   },
   components: {
     securitySchemes: {
