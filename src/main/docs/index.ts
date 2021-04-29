@@ -1,5 +1,10 @@
+import { badRequest } from './components/badRequest';
+import { notFound } from './components/notFound';
+import { serverError } from './components/serverError';
+import { unauthorized } from './components/unauthorized';
 import { loginPath } from './paths/loginPath';
 import { accountSchema } from './schemas/accountSchema';
+import { errorSchema } from './schemas/errorSchema';
 import { loginParamsSchema } from './schemas/loginParamsSchema';
 
 export default {
@@ -26,5 +31,12 @@ export default {
   schemas: {
     account: accountSchema,
     'login-params': loginParamsSchema,
+    error: errorSchema,
+  },
+  components: {
+    badRequest,
+    serverError,
+    unauthorized,
+    notFound,
   },
 };
