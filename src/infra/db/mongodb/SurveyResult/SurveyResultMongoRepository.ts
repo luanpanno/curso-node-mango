@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/indent */
 import { ObjectId } from 'bson';
 
+import { LoadSurveyResultRepository } from '@/data/protocols/db/surveyResult/LoadSurveyResultRepository';
 import { SaveSurveyResultRepository } from '@/data/protocols/db/surveyResult/SaveSurveyResultRepository';
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurveyResult';
@@ -7,7 +9,8 @@ import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurve
 import { MongoHelper } from '../helpers/MongoHelper';
 import { QueryBuilder } from '../helpers/QueryBuilder';
 
-export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+export class SurveyResultMongoRepository
+  implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
@@ -35,7 +38,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
     return surveyResult;
   }
 
-  private async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
       'surveyResults'
     );
