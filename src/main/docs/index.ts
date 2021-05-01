@@ -49,7 +49,7 @@ export default {
   },
   schemas: {
     account: accountSchema,
-    lgoinParams: loginParamsSchema,
+    loginParams: loginParamsSchema,
     error: errorSchema,
     surveys: surveysSchema,
     survey: surveySchema,
