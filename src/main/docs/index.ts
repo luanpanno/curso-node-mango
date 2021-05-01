@@ -15,6 +15,7 @@ import { loginParamsSchema } from './schemas/loginParamsSchema';
 import { saveSurveyParamsSchema } from './schemas/saveSurveyParamsSchema';
 import { signupParamsSchema } from './schemas/signupParamsSchema';
 import { surveyAnswerSchema } from './schemas/surveyAnswerSchema';
+import { surveyResultAnswerSchema } from './schemas/surveyResultAnswerSchema';
 import { surveyResultSchema } from './schemas/surveyResultSchema';
 import { surveySchema } from './schemas/surveySchema';
 import { surveysSchema } from './schemas/surveysSchema';
@@ -57,6 +58,7 @@ export default {
     addSurveyParams: addSurveyParamsSchema,
     saveSurveyParams: saveSurveyParamsSchema,
     surveyResult: surveyResultSchema,
+    surveyResultAnswer: surveyResultAnswerSchema,
   },
   components: {
     securitySchemes: {
