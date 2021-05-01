@@ -1,7 +1,11 @@
 import MockDate from 'mockdate';
 
+import { LoadSurveyResultRepository } from '@/data/protocols/db/surveyResult/LoadSurveyResultRepository';
 import { SaveSurveyResultRepository } from '@/data/protocols/db/surveyResult/SaveSurveyResultRepository';
-import { mockSaveSurveyResultRepository } from '@/data/test/mockDbSurveyResult';
+import {
+  mockLoadSurveyResultRepository,
+  mockSaveSurveyResultRepository,
+} from '@/data/test/mockDbSurveyResult';
 import {
   mockSaveSurveyResultParams,
   mockSurveyResultModel,
@@ -12,14 +16,20 @@ import { DbSaveSurveyResult } from './DbSaveSurveyResult';
 type SutTypes = {
   sut: DbSaveSurveyResult;
   saveSurveyResultRepositoryStub: SaveSurveyResultRepository;
+  loadSurveyResultRepositoryStub: LoadSurveyResultRepository;
 };
 
 const makeSut = (): SutTypes => {
+  const loadSurveyResultRepositoryStub = mockLoadSurveyResultRepository();
   const saveSurveyResultRepositoryStub = mockSaveSurveyResultRepository();
-  const sut = new DbSaveSurveyResult(saveSurveyResultRepositoryStub);
+  const sut = new DbSaveSurveyResult(
+    saveSurveyResultRepositoryStub,
+    loadSurveyResultRepositoryStub
+  );
   return {
     sut,
     saveSurveyResultRepositoryStub,
+    loadSurveyResultRepositoryStub,
   };
 };
 
@@ -51,9 +61,34 @@ describe('DbSaveSurveyResult Usecase', () => {
     await expect(promise).rejects.toThrow();
   });
 
+  test('Should call LoadSurveyResultRepository with correct values', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut();
+    const loadBySurveyIdSpy = jest.spyOn(
+      loadSurveyResultRepositoryStub,
+      'loadBySurveyId'
+    );
+    const surveyResultData = mockSaveSurveyResultParams();
+
+    await sut.save(surveyResultData);
+
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyResultData.surveyId);
+  });
+
+  test('Should throw if LoadSurveyResultRepository throws', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut();
+    jest
+      .spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+
+    const promise = sut.save(mockSaveSurveyResultParams());
+
+    await expect(promise).rejects.toThrow();
+  });
+
   test('Should return SurveyResult on success', async () => {
     const { sut } = makeSut();
     const surveyResult = await sut.save(mockSaveSurveyResultParams());
+
     expect(surveyResult).toEqual(mockSurveyResultModel());
   });
 });

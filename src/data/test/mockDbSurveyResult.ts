@@ -8,8 +8,8 @@ import { SaveSurveyResultRepository } from '../protocols/db/surveyResult/SaveSur
 export const mockSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return Promise.resolve(mockSurveyResultModel());
+    async save(data: SaveSurveyResultParams): Promise<void> {
+      return Promise.resolve();
     }
   }
 

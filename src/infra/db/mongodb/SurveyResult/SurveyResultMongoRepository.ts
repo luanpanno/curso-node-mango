@@ -12,7 +12,7 @@ import { QueryBuilder } from '../helpers/QueryBuilder';
 export class SurveyResultMongoRepository
   implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save(data: SaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection(
       'surveyResults'
     );
@@ -32,10 +32,6 @@ export class SurveyResultMongoRepository
         upsert: true,
       }
     );
-
-    const surveyResult = await this.loadBySurveyId(data.surveyId);
-
-    return surveyResult;
   }
 
   async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
