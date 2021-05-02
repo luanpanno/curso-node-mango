@@ -1,5 +1,6 @@
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult';
+import { LoadSurveyResult } from '@/domain/usecases/surveyResult/LoadSurveyResult';
 import {
   SaveSurveyResult,
   SaveSurveyResultParams,
@@ -14,4 +15,15 @@ export const mockSaveSurveyResult = (): SaveSurveyResult => {
   }
 
   return new SaveSurveyResultStub();
+};
+
+export const mockLoadSurveyResult = (): LoadSurveyResult => {
+  class LoadSurveyResultStub implements LoadSurveyResult {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async load(surveyId: string): Promise<SurveyResultModel> {
+      return Promise.resolve(mockSurveyResultModel());
+    }
+  }
+
+  return new LoadSurveyResultStub();
 };
