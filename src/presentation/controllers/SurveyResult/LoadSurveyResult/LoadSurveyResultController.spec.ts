@@ -1,7 +1,8 @@
+import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult';
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
 import { LoadSurveyResult } from '@/domain/usecases/surveyResult/LoadSurveyResult';
 import { InvalidParamError } from '@/presentation/errors';
-import { forbidden, serverError } from '@/presentation/helpers';
+import { forbidden, ok, serverError } from '@/presentation/helpers';
 import { HttpRequest } from '@/presentation/protocols';
 import { mockLoadSurveyById } from '@/presentation/test/mockSurvey';
 import { mockLoadSurveyResult } from '@/presentation/test/mockSurveyResult';
@@ -78,7 +79,7 @@ describe('LoadSurveyResultController', () => {
     expect(loadSpy).toHaveBeenCalledWith('any_id');
   });
 
-  test('Should return 500 if LoadSurveyById throws', async () => {
+  test('Should return 500 if LoadSurveyResult throws', async () => {
     const { sut, loadSurveyResultStub } = makeSut();
 
     jest
@@ -88,5 +89,12 @@ describe('LoadSurveyResultController', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(ok(mockSurveyResultModel()));
   });
 });
