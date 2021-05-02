@@ -50,7 +50,7 @@ describe('Survey Routes', () => {
     await accountCollection.deleteMany({});
   });
 
-  describe('PUT /surveys/:surveysId/results', () => {
+  describe('PUT /survey/:surveysId/results', () => {
     test('should return status 403 on save survey result without accessToken', async () => {
       await request(app)
         .put('/api/v1/surveys/any_id/results')
@@ -59,31 +59,37 @@ describe('Survey Routes', () => {
         })
         .expect(403);
     });
+
+    test('should return status 200 on save survey result with accessToken', async () => {
+      const accessToken = await makeAccessToken();
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [
+          {
+            answer: 'Answer 1',
+            image: '',
+          },
+          {
+            answer: 'Answer 2',
+            image: '',
+          },
+        ],
+        date: new Date(),
+      });
+
+      await request(app)
+        .put(`/api/v1/surveys/${String(res.ops[0]._id)}/results`)
+        .set('x-access-token', accessToken)
+        .send({
+          answer: 'Answer 1',
+        })
+        .expect(200);
+    });
   });
 
-  test('should return status 200 on save survey result with accessToken', async () => {
-    const accessToken = await makeAccessToken();
-    const res = await surveyCollection.insertOne({
-      question: 'Question',
-      answers: [
-        {
-          answer: 'Answer 1',
-          image: '',
-        },
-        {
-          answer: 'Answer 2',
-          image: '',
-        },
-      ],
-      date: new Date(),
+  describe('GET /survey/:surveysId/results', () => {
+    test('should return status 403 on load survey result without accessToken', async () => {
+      await request(app).get('/api/v1/surveys/any_id/results').expect(403);
     });
-
-    await request(app)
-      .put(`/api/v1/surveys/${String(res.ops[0]._id)}/results`)
-      .set('x-access-token', accessToken)
-      .send({
-        answer: 'Answer 1',
-      })
-      .expect(200);
   });
 });
