@@ -1,3 +1,5 @@
+import MockDate from 'mockdate';
+
 import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult';
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
 import { LoadSurveyResult } from '@/domain/usecases/surveyResult/LoadSurveyResult';
@@ -37,6 +39,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe('LoadSurveyResultController', () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test('Should call LoadSurveyById with correct value', async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById');
