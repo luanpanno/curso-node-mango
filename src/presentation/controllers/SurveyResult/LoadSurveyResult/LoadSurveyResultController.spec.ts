@@ -1,4 +1,6 @@
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
+import { InvalidParamError } from '@/presentation/errors';
+import { forbidden } from '@/presentation/helpers';
 import { HttpRequest } from '@/presentation/protocols';
 import { mockLoadSurveyById } from '@/presentation/test/mockSurvey';
 
@@ -33,5 +35,17 @@ describe('LoadSurveyResultController', () => {
     await sut.handle(makeFakeRequest());
 
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id');
+  });
+
+  test('Should return 403 if LoadSurveyById returns null', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut();
+
+    jest
+      .spyOn(loadSurveyByIdStub, 'loadById')
+      .mockReturnValueOnce(Promise.resolve(null));
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')));
   });
 });
