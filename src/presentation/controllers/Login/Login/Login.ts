@@ -19,11 +19,14 @@ class LoginController implements Controller {
         return badRequest(error);
       }
 
-      const accessToken = await this.authentication.auth({ email, password });
+      const authenticationModel = await this.authentication.auth({
+        email,
+        password,
+      });
 
-      if (!accessToken) return unauthorized();
+      if (!authenticationModel) return unauthorized();
 
-      return ok({ accessToken });
+      return ok(authenticationModel);
     } catch (error) {
       return serverError(error);
     }
