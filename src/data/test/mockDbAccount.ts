@@ -2,56 +2,54 @@
 import { AccountModel } from '@/domain/models/Account';
 import { mockAccountModel } from '@/domain/test/mockAccount';
 import { AddAccountParams } from '@/domain/usecases/account/AddAccount';
-import { LoadAccountByToken } from '@/domain/usecases/account/LoadAccountByToken';
 
 import { AddAccountRepository } from '../protocols/db/account/AddAccountRepository';
 import { LoadAccountByEmailRepository } from '../protocols/db/account/LoadAccountByEmailRepository';
 import { LoadAccountByTokenRepository } from '../protocols/db/account/LoadAccountByTokenRepository';
 import { UpdateAccessTokenRepository } from '../protocols/db/account/UpdateAccessTokenRepository';
 
-export const mockAddAccountRepository = (): AddAccountRepository => {
-  class AddAccountRepositoryStub implements AddAccountRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(account: AddAccountParams): Promise<AccountModel> {
-      const fakeAccount = mockAccountModel();
+export class AddAccountRepositorySpy implements AddAccountRepository {
+  accountModel = mockAccountModel();
+  addAccountParams: AddAccountParams;
 
-      return Promise.resolve(fakeAccount);
-    }
+  async add(data: AddAccountParams): Promise<AccountModel> {
+    this.addAccountParams = data;
+    return Promise.resolve(this.accountModel);
   }
+}
 
-  return new AddAccountRepositoryStub();
-};
+export class LoadAccountByEmailRepositorySpy
+  implements LoadAccountByEmailRepository {
+  accountModel = mockAccountModel();
+  email: string;
 
-export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
-  class LoadAccountByEmailRepositoryStub
-    implements LoadAccountByEmailRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByEmail(email: string): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel());
-    }
+  async loadByEmail(email: string): Promise<AccountModel> {
+    this.email = email;
+    return Promise.resolve(this.accountModel);
   }
+}
 
-  return new LoadAccountByEmailRepositoryStub();
-};
+export class LoadAccountByTokenRepositorySpy
+  implements LoadAccountByTokenRepository {
+  accountModel = mockAccountModel();
+  token: string;
+  role: string;
 
-export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepository implements LoadAccountByTokenRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadByToken(token: string, role?: string): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel());
-    }
+  async loadByToken(token: string, role?: string): Promise<AccountModel> {
+    this.token = token;
+    this.role = role;
+    return Promise.resolve(this.accountModel);
   }
+}
 
-  return new LoadAccountByTokenRepository();
-};
+export class UpdateAccessTokenRepositorySpy
+  implements UpdateAccessTokenRepository {
+  id: string;
+  token: string;
 
-export const mockUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
-  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async updateAccessToken(id: string, token: string): Promise<void> {
-      return Promise.resolve();
-    }
+  async updateAccessToken(id: string, token: string): Promise<void> {
+    this.id = id;
+    this.token = token;
+    return Promise.resolve();
   }
-
-  return new UpdateAccessTokenRepositoryStub();
-};
+}

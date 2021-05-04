@@ -1,37 +1,34 @@
 import { SurveyModel } from '@/domain/models/SurveyModel';
-import { mockSurveyModel, mockSurveysModels } from '@/domain/test/mockSurvey';
+import { mockSurveyModels, mockSurveyModel } from '@/domain/test/mockSurvey';
 import { AddSurvey, AddSurveyParams } from '@/domain/usecases/survey/AddSurvey';
 import { LoadSurveyById } from '@/domain/usecases/survey/LoadSurveyById';
 import { LoadSurveys } from '@/domain/usecases/survey/LoadSurveys';
 
-export const mockAddSurvey = (): AddSurvey => {
-  class AddSurveyStub implements AddSurvey {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(data: AddSurveyParams): Promise<void> {
-      return Promise.resolve(null);
-    }
+export class AddSurveySpy implements AddSurvey {
+  addSurveyParams: AddSurveyParams;
+
+  async add(data: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = data;
+    return Promise.resolve();
   }
+}
 
-  return new AddSurveyStub();
-};
+export class LoadSurveysSpy implements LoadSurveys {
+  surveyModels = mockSurveyModels();
+  callsCount = 0;
 
-export const mockLoadSurveys = (): LoadSurveys => {
-  class LoadSurveysStub implements LoadSurveys {
-    async load(): Promise<SurveyModel[]> {
-      return Promise.resolve(mockSurveysModels());
-    }
+  async load(): Promise<SurveyModel[]> {
+    this.callsCount++;
+    return Promise.resolve(this.surveyModels);
   }
+}
 
-  return new LoadSurveysStub();
-};
+export class LoadSurveyByIdSpy implements LoadSurveyById {
+  surveyModel = mockSurveyModel();
+  id: string;
 
-export const mockLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(mockSurveyModel());
-    }
+  async loadById(id: string): Promise<SurveyModel> {
+    this.id = id;
+    return Promise.resolve(this.surveyModel);
   }
-
-  return new LoadSurveyByIdStub();
-};
+}

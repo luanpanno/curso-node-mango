@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { SurveyResultModel } from '@/domain/models/SurveyResult';
 import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult';
 import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurveyResult';
@@ -5,24 +6,23 @@ import { SaveSurveyResultParams } from '@/domain/usecases/surveyResult/SaveSurve
 import { LoadSurveyResultRepository } from '../protocols/db/surveyResult/LoadSurveyResultRepository';
 import { SaveSurveyResultRepository } from '../protocols/db/surveyResult/SaveSurveyResultRepository';
 
-export const mockSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
-  class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async save(data: SaveSurveyResultParams): Promise<void> {
-      return Promise.resolve();
-    }
+export class SaveSurveyResultRepositorySpy
+  implements SaveSurveyResultRepository {
+  saveSurveyResultParams: SaveSurveyResultParams;
+
+  async save(data: SaveSurveyResultParams): Promise<void> {
+    this.saveSurveyResultParams = data;
+    return Promise.resolve();
   }
+}
 
-  return new SaveSurveyResultRepositoryStub();
-};
+export class LoadSurveyResultRepositorySpy
+  implements LoadSurveyResultRepository {
+  surveyResultModel = mockSurveyResultModel();
+  surveyId: string;
 
-export const mockLoadSurveyResultRepository = (): LoadSurveyResultRepository => {
-  class LoadSurveyResultRepositoryStub implements LoadSurveyResultRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
-      return Promise.resolve(mockSurveyResultModel());
-    }
+  async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+    this.surveyId = surveyId;
+    return Promise.resolve(this.surveyResultModel);
   }
-
-  return new LoadSurveyResultRepositoryStub();
-};
+}

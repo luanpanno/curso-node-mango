@@ -1,12 +1,10 @@
 import { LogErrorRepository } from '../protocols/db/log/LogErrorRepository';
 
-export const mockLogErrorRepository = (): LogErrorRepository => {
-  class LogErrorRepositoryStub implements LogErrorRepository {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async logError(stackError: string): Promise<void> {
-      return Promise.resolve();
-    }
-  }
+export class LogErrorRepositorySpy implements LogErrorRepository {
+  stack: string;
 
-  return new LogErrorRepositoryStub();
-};
+  async logError(stack: string): Promise<void> {
+    this.stack = stack;
+    return Promise.resolve();
+  }
+}

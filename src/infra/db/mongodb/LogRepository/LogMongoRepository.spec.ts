@@ -1,12 +1,15 @@
+import faker from 'faker';
 import { Collection } from 'mongodb';
 
 import { MongoHelper } from '../helpers/MongoHelper';
 import LogMongoRepository from './LogMongoRepository';
 
-const makeSut = (): LogMongoRepository => new LogMongoRepository();
+const makeSut = (): LogMongoRepository => {
+  return new LogMongoRepository();
+};
 
-describe('Log Mongo Repository', () => {
-  let errorsCollection: Collection;
+describe('LogMongoRepository', () => {
+  let errorCollection: Collection;
 
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL);
@@ -17,18 +20,14 @@ describe('Log Mongo Repository', () => {
   });
 
   beforeEach(async () => {
-    errorsCollection = await MongoHelper.getCollection('errors');
-
-    await errorsCollection.deleteMany({});
+    errorCollection = await MongoHelper.getCollection('errors');
+    await errorCollection.deleteMany({});
   });
 
-  test('should create an error log on success', async () => {
+  test('Should create an error log on success', async () => {
     const sut = makeSut();
-
-    await sut.logError('any_error');
-
-    const count = await errorsCollection.countDocuments();
-
+    await sut.logError(faker.random.words());
+    const count = await errorCollection.countDocuments();
     expect(count).toBe(1);
   });
 });

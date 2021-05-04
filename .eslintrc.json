@@ -50,6 +50,7 @@
     "@typescript-eslint/space-before-function-paren": ["off"],
     "comma-dangle": "off",
     "no-misused-promises": "off",
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/indent": "off"
   }
 }

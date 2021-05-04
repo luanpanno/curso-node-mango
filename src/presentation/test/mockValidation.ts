@@ -1,12 +1,11 @@
 import { Validation } from '../protocols/Validation';
 
-export const mockValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    validate(input: any): Error {
-      return null;
-    }
-  }
+export class ValidationSpy implements Validation {
+  error: Error = null;
+  input: any;
 
-  return new ValidationStub();
-};
+  validate(input: any): Error {
+    this.input = input;
+    return this.error;
+  }
+}

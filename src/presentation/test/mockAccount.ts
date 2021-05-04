@@ -1,3 +1,5 @@
+import faker from 'faker';
+
 import { AccountModel } from '@/domain/models/Account';
 import { mockAccountModel } from '@/domain/test/mockAccount';
 import {
@@ -10,37 +12,34 @@ import {
 } from '@/domain/usecases/account/Authentication';
 import { LoadAccountByToken } from '@/domain/usecases/account/LoadAccountByToken';
 
-export const mockAddAccount = (): AddAccount => {
-  class AddAccountStub implements AddAccount {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async add(account: AddAccountParams): Promise<AccountModel> {
-      const fakeAccount = mockAccountModel();
+export class AddAccountSpy implements AddAccount {
+  accountModel = mockAccountModel();
+  addAccountParams: AddAccountParams;
 
-      return new Promise((resolve) => resolve(fakeAccount));
-    }
+  async add(account: AddAccountParams): Promise<AccountModel> {
+    this.addAccountParams = account;
+    return Promise.resolve(this.accountModel);
   }
+}
 
-  return new AddAccountStub();
-};
+export class AuthenticationSpy implements Authentication {
+  authenticationParams: AuthenticationParams;
+  token = faker.datatype.uuid();
 
-export const mockAuthentication = (): Authentication => {
-  class AuthenticationStub implements Authentication {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async auth(auth: AuthenticationParams): Promise<string> {
-      return Promise.resolve('any_token');
-    }
+  async auth(authenticationParams: AuthenticationParams): Promise<string> {
+    this.authenticationParams = authenticationParams;
+    return Promise.resolve(this.token);
   }
+}
 
-  return new AuthenticationStub();
-};
+export class LoadAccountByTokenSpy implements LoadAccountByToken {
+  accountModel = mockAccountModel();
+  accessToken: string;
+  role: string;
 
-export const mockLoadAccountByToken = (): LoadAccountByToken => {
-  class LoadAccountByTokenStub implements LoadAccountByToken {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async load(accessToken: string): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel());
-    }
+  async load(accessToken: string, role?: string): Promise<AccountModel> {
+    this.accessToken = accessToken;
+    this.role = role;
+    return Promise.resolve(this.accountModel);
   }
-
-  return new LoadAccountByTokenStub();
-};
+}
