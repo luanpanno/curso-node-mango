@@ -8,7 +8,7 @@ export class LoadSurveysController implements Controller {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const surveys = await this.loadSurveys.load();
+      const surveys = await this.loadSurveys.load(httpRequest.accountId);
 
       return surveys?.length > 0 ? ok(surveys) : noContent();
     } catch (error) {
