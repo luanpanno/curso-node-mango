@@ -12,4 +12,4 @@ export const addSurveyParamsSchema = {
     }
   },
   required: ['question', 'answers']
-}
+};

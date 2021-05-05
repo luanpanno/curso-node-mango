@@ -51,6 +51,9 @@
     "comma-dangle": "off",
     "no-misused-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "import/export": "off",
+    "@typescript/namespace": "off",
+    "@typescript-eslint/restrict-template-expressions": "off"
   }
 }

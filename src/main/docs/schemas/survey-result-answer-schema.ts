@@ -18,4 +18,4 @@ export const surveyResultAnswerSchema = {
     }
   },
   required: ['answer', 'count', 'percent', 'isCurrentAccountAnswer']
-}
+};

@@ -18,4 +18,4 @@ export const surveyResultSchema = {
     }
   },
   required: ['surveyId', 'question', 'answers', 'date']
-}
+};

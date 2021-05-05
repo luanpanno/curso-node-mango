@@ -9,4 +9,4 @@ export const accountSchema = {
     }
   },
   required: ['accessToken', 'name']
-}
+};

@@ -15,4 +15,4 @@ export const signUpParamsSchema = {
     }
   },
   required: ['name', 'email', 'password', 'passwordConfirmation']
-}
+};

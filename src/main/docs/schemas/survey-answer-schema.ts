@@ -9,4 +9,4 @@ export const surveyAnswerSchema = {
     }
   },
   required: ['answer']
-}
+};

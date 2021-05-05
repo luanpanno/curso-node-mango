@@ -1,11 +1,11 @@
-import { apiKeyAuthSchema } from './schemas/'
 import {
   badRequest,
   serverError,
   unauthorized,
   notFound,
   forbidden
-} from './components/'
+} from './components/';
+import { apiKeyAuthSchema } from './schemas/';
 
 export default {
   securitySchemes: {
@@ -16,4 +16,4 @@ export default {
   unauthorized,
   notFound,
   forbidden
-}
+};

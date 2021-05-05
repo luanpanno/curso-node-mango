@@ -21,4 +21,4 @@ export const surveySchema = {
     }
   },
   required: ['id', 'question', 'answers', 'date', 'didAnswer']
-}
+};

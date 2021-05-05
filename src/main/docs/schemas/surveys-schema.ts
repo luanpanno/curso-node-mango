@@ -3,4 +3,4 @@ export const surveysSchema = {
   items: {
     $ref: '#/schemas/survey'
   }
-}
+};

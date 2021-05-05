@@ -1,12 +1,12 @@
-import { MongoHelper, QueryBuilder } from '@/infra/db'
-import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols/db'
+import round from 'mongo-round';
+import { ObjectId } from 'mongodb';
 
-import { ObjectId } from 'mongodb'
-import round from 'mongo-round'
+import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols/db';
+import { MongoHelper, QueryBuilder } from '@/infra/db';
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save (data: SaveSurveyResultRepository.Params): Promise<void> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    const surveyResultCollection = await MongoHelper.getCollection('surveyResults');
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
       accountId: new ObjectId(data.accountId)
@@ -17,11 +17,11 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
       }
     }, {
       upsert: true
-    })
+    });
   }
 
   async loadBySurveyId (surveyId: string, accountId: string): Promise<LoadSurveyResultRepository.Result> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    const surveyResultCollection = await MongoHelper.getCollection('surveyResults');
     const query = new QueryBuilder()
       .match({
         surveyId: new ObjectId(surveyId)
@@ -191,8 +191,8 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
         date: '$_id.date',
         answers: '$answers'
       })
-      .build()
-    const surveyResult = await surveyResultCollection.aggregate(query).toArray()
-    return surveyResult.length ? surveyResult[0] : null
+      .build();
+    const surveyResult = await surveyResultCollection.aggregate(query).toArray();
+    return surveyResult.length ? surveyResult[0] : null;
   }
 }

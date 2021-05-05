@@ -1,5 +1,5 @@
-import { Validation } from '@/presentation/protocols'
-import { InvalidParamError } from '@/presentation/errors'
+import { InvalidParamError } from '@/presentation/errors';
+import { Validation } from '@/presentation/protocols';
 
 export class CompareFieldsValidation implements Validation {
   constructor (
@@ -9,7 +9,7 @@ export class CompareFieldsValidation implements Validation {
 
   validate (input: any): Error {
     if (input[this.fieldName] !== input[this.fieldToCompareName]) {
-      return new InvalidParamError(this.fieldToCompareName)
+      return new InvalidParamError(this.fieldToCompareName);
     }
   }
 }
