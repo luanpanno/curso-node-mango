@@ -1,73 +1,39 @@
-import { badRequest } from './components/badRequest';
-import { forbidden } from './components/forbidden';
-import { notFound } from './components/notFound';
-import { serverError } from './components/serverError';
-import { unauthorized } from './components/unauthorized';
-import { loginPath } from './paths/loginPath';
-import { signupPath } from './paths/signupPath';
-import { surveyPath } from './paths/surveyPath';
-import { surveyResultPath } from './paths/surveyResultPath';
-import { accountSchema } from './schemas/accountSchema';
-import { addSurveyParamsSchema } from './schemas/addSurveyParamsSchema';
-import { apiKeyAuthSchema } from './schemas/apiKeyAuthSchema';
-import { errorSchema } from './schemas/errorSchema';
-import { loginParamsSchema } from './schemas/loginParamsSchema';
-import { saveSurveyParamsSchema } from './schemas/saveSurveyParamsSchema';
-import { signupParamsSchema } from './schemas/signupParamsSchema';
-import { surveyAnswerSchema } from './schemas/surveyAnswerSchema';
-import { surveyResultAnswerSchema } from './schemas/surveyResultAnswerSchema';
-import { surveyResultSchema } from './schemas/surveyResultSchema';
-import { surveySchema } from './schemas/surveySchema';
-import { surveysSchema } from './schemas/surveysSchema';
+import paths from './paths'
+import components from './components'
+import schemas from './schemas'
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Clean Node API',
-    description:
-      'API do curso do Mango para realizar enquetes entre programadores',
+    title: '4Dev - Enquetes para Programadores',
+    description: 'Essa é a documentação da API feita pelo instrutor Rodrigo Manguinho no curso da Udemy de NodeJs usando Typescript, TDD, Clean Architecture e seguindo os princípios do SOLID e Design Patterns.',
     version: '1.0.0',
-  },
-  servers: [
-    {
-      url: '/api/v1',
+    contact: {
+      name: 'Rodrigo Manguinho',
+      email: 'rodrigo.manguinho@gmail.com',
+      url: 'https://www.linkedin.com/in/rmanguinho'
     },
-  ],
-  tags: [
-    {
-      name: 'Login',
-    },
-    {
-      name: 'Enquetes',
-    },
-  ],
-  paths: {
-    '/login': loginPath,
-    '/signup': signupPath,
-    '/surveys': surveyPath,
-    '/surveys/:surveyId/results': surveyResultPath,
+    license: {
+      name: 'GPL-3.0-or-later',
+      url: 'https://spdx.org/licenses/GPL-3.0-or-later.html'
+    }
   },
-  schemas: {
-    account: accountSchema,
-    loginParams: loginParamsSchema,
-    error: errorSchema,
-    surveys: surveysSchema,
-    survey: surveySchema,
-    surveyAnswer: surveyAnswerSchema,
-    signupParams: signupParamsSchema,
-    addSurveyParams: addSurveyParamsSchema,
-    saveSurveyParams: saveSurveyParamsSchema,
-    surveyResult: surveyResultSchema,
-    surveyResultAnswer: surveyResultAnswerSchema,
+  externalDocs: {
+    description: 'Link para o treinamento completo',
+    url: 'https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1'
   },
-  components: {
-    securitySchemes: {
-      apiKeyAuth: apiKeyAuthSchema,
-    },
-    badRequest,
-    serverError,
-    unauthorized,
-    notFound,
-    forbidden,
-  },
-};
+  servers: [{
+    url: '/api',
+    description: 'Servidor Principal'
+  }],
+  tags: [{
+    name: 'Login',
+    description: 'APIs relacionadas a Login'
+  }, {
+    name: 'Enquete',
+    description: 'APIs relacionadas a Enquete'
+  }],
+  paths,
+  schemas,
+  components
+}
