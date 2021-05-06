@@ -9,7 +9,7 @@ const checkError = (error: GraphQLError, errorName: string): boolean =>
   [error.name, error.originalError?.name].some((name) => name === errorName);
 
 const handleErrors = (response: any, errors: readonly GraphQLError[]): void => {
-  errors.forEach((error) => {
+  errors?.forEach((error) => {
     response.data = null;
 
     if (checkError(error, 'UserInputError')) {
